@@ -1,0 +1,50 @@
+# Arquivos de configuração
+config.js
+config.json
+
+# Dependências instaladas
+/node_modules
+
+# Arquivos gerados
+dist/
+build/
+*.log
+
+# Arquivos de ambiente
+.env
+.env.local
+.env.*.local
+
+# Arquivos temporários
+*.swp
+*.swo
+*.tmp
+
+# Arquivos de histórico do sistema de controle de versão
+.svn/
+.git/
+.hg/
+
+# Logs e arquivos de cache
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
+Thumbs.db
+.cache/
+
+# Arquivos de configuração de IDEs
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Arquivos de backup
+*.bak
+*.backup
+
+# Arquivos de inicialização de servidor
+Procfile
+
+# Arquivos de teste e cobertura
+coverage/
