@@ -351,13 +351,6 @@ REFERENCES odonto.grupo_usuario (id_grupo_usuario) MATCH SIMPLE
 ON DELETE NO ACTION ON UPDATE NO ACTION;
 -- ddl-end --
 
--- object: fk_id_conta | type: CONSTRAINT --
--- ALTER TABLE odonto.grupo_usuario_conta DROP CONSTRAINT IF EXISTS fk_id_conta CASCADE;
-ALTER TABLE odonto.grupo_usuario_conta ADD CONSTRAINT fk_id_conta FOREIGN KEY (id_conta)
-REFERENCES odonto.usuario (id_conta) MATCH SIMPLE
-ON DELETE NO ACTION ON UPDATE NO ACTION;
--- ddl-end --
-
 -- object: fk_id_empresa | type: CONSTRAINT --
 -- ALTER TABLE odonto.profissional DROP CONSTRAINT IF EXISTS fk_id_empresa CASCADE;
 ALTER TABLE odonto.profissional ADD CONSTRAINT fk_id_empresa FOREIGN KEY (fk_id_empresa)

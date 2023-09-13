@@ -1,8 +1,9 @@
 import express, { Request, Response, NextFunction } from 'express';
-import usuarioRoute from './routes/usuarioRoute'
+import userRoute from './routes/userRoute'
+import empresaRoute from './routes/empresaRoute'
+export const app = express()
 
-export const app = express();
+app.use(express.json())
 
-app.use(express.json());
-
-app.use('/usuario', usuarioRoute);
+app.use('/user', userRoute)
+app.use('/empresa', empresaRoute)
