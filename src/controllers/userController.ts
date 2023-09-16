@@ -58,7 +58,7 @@ export class UserController {
     }
   };
 
-  async loginOne(req: Request, res: Response){
+  async loginOne(req: Request, res: Response) {
     try {
       const foundUser = await this.login(req.body);
       res.status(200).send(foundUser);

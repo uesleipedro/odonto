@@ -9,7 +9,7 @@
 -- 
 -- object: new_database | type: DATABASE --
 -- DROP DATABASE IF EXISTS new_database;
-CREATE DATABASE new_database;
+CREATE DATABASE odonto;
 -- ddl-end --
 
 
@@ -67,7 +67,7 @@ ALTER TABLE odonto.paciente OWNER TO postgres;
 CREATE TABLE odonto.usuario (
 	email varchar(100) NOT NULL,
 	nome varchar(100),
-	fk_id_empresa integer,
+	id_empresa integer,
 	senha varchar(255),
 	CONSTRAINT pk_email PRIMARY KEY (email)
 );
@@ -78,7 +78,7 @@ ALTER TABLE odonto.usuario OWNER TO postgres;
 -- object: odonto.endereco | type: TABLE --
 -- DROP TABLE IF EXISTS odonto.endereco CASCADE;
 CREATE TABLE odonto.endereco (
-	id_endereco serial,
+	id_endereco_serial,
 	logradouro varchar(100),
 	numero varchar(20),
 	bairro varchar(100),
@@ -110,17 +110,17 @@ ALTER TABLE odonto.grupo_usuario OWNER TO postgres;
 -- DROP TABLE IF EXISTS odonto.agenda CASCADE;
 CREATE TABLE odonto.agenda (
 	id_agenda serial NOT NULL,
-	fk_id_empresa integer,
-	fk_id_paciente integer,
-	fk_id_profissional integer,
+	id_empresa integer,
+	id_paciente integer,
+	id_profissional integer,
 	start_date_time timestamp,
 	end_date_time timestamp,
 	obs text,
-	fk_id_metodo_pagamento integer,
+	id_metodo_pagamento integer,
 	total_pagamento_servico float,
 	desconto float,
 	status integer,
-	CONSTRAINT pk_id_agenda PRIMARY KEY (id_agenda)
+	CONSTRAINT id_agenda PRIMARY KEY (id_agenda)
 );
 -- ddl-end --
 ALTER TABLE odonto.agenda OWNER TO postgres;
