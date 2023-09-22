@@ -22,5 +22,10 @@ export class PacienteController {
     if (existingPaciente) throw new Error('Já existe uma um paciente cadastrado com esse CPF');
 
     return pacienteData.savePaciente(paciente);
-  };
+  }
+
+  async deletePaciente(id_paciente: number) {
+
+    return await pacienteData.deletePaciente(id_paciente);
+  }
 }
