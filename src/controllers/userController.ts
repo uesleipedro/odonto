@@ -69,7 +69,7 @@ export class UserController {
 
   async saveUser(user: User) {
     const existingUser = await userData.getUserByEmail(user.email);
-    if (existingUser) throw new Error('User already exists');
+    if (existingUser) throw Error('User already exists')
 
     const saltRound = 8;
     user.senha = await bcrypt.hash(user.senha, saltRound);
