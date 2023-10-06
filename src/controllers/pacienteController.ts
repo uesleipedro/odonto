@@ -10,7 +10,7 @@ export class PacienteController {
     return pacienteData.getPacientes();
   };
 
-  async getPacienteById(id_paciente: number){
+  async getPacienteById(id_paciente: number) {
     const paciente = await pacienteData.getPacienteById(id_paciente);
     if (!paciente) throw new Error('User not found');
     return paciente;
