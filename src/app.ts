@@ -13,6 +13,6 @@ app.use(express.json())
 app.use(cors());
 
 app.use('/user', userRoute)
-app.use('/empresa', userController.auth, empresaRoute)
+app.use('/empresa', empresaRoute)
 app.use('/agenda', agendaRoute)
-app.use('/paciente', userController.auth, pacienteRoute)
+app.use('/paciente', pacienteRoute)

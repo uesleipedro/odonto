@@ -38,7 +38,7 @@ export class UserController {
       expiresIn: '2 days',
     });
 
-    return { user: { foundUser }, token: token };
+    return { user: { foundUser }, token: token, expiratedAt: '' };
   }
 
   async auth(req: Request, res: Response, next: NextFunction) {
