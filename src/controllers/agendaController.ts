@@ -20,7 +20,8 @@ export class AgendaController {
        if(!a) throw new Error("Erro aqui")
 
     }catch(e){
-        throw new Error ('Deu ruim')
+        //throw new Error ()
+        console.error(e)
     }
 
   };

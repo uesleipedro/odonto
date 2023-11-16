@@ -40,4 +40,13 @@ router.post('/login', async function (req: Request, res: Response, next) {
     }
 });
 
+router.post('/loginOne', async function (req: Request, res: Response, next) {
+    try {
+       const response = await userController.loginOne(req, res);
+       res.status(201).json(response);
+    } catch (e: any) {
+        next(e);
+    }
+});
+
 export default router;

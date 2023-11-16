@@ -30,7 +30,6 @@ export class UserController {
     if (!foundUser) throw new Error('Wrong username or password!');
 
     const isMatch = bcrypt.compareSync(loginData.senha, foundUser.senha);
-
     if (!isMatch) throw new Error('Wrong username or password!');
 
     //const SECRET_KEY = "asdf";

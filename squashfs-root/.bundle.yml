@@ -1,0 +1,39 @@
+apt:
+  sources:
+  - deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ focal main restricted universe
+    multiverse
+  packages:
+  - libopengl0:amd64=1.3.1-1
+  - libssl1.1:amd64=1.1.1f-1ubuntu2
+  - libkrb5-3:amd64=1.17-6ubuntu4
+  - liblzma5:amd64=5.2.4-1
+  - python3-pkg-resources:all=45.2.0-1
+  - libpython3.8-stdlib:amd64=3.8.2-1ubuntu1
+  - readline-common:all=8.0-4
+  - libk5crypto3:amd64=1.17-6ubuntu4
+  - libpython3-stdlib:amd64=3.8.2-0ubuntu2
+  - libffi7:amd64=3.3-4
+  - libtinfo6:amd64=6.2-0ubuntu2
+  - libuuid1:amd64=2.34-0.1ubuntu9
+  - libcrypt1:amd64=1:4.4.10-10ubuntu4
+  - libcom-err2:amd64=1.45.5-2ubuntu1
+  - libbz2-1.0:amd64=1.0.8-2
+  - libdb5.3:amd64=5.3.28+dfsg1-0.6ubuntu2
+  - libgcc-s1:amd64=10-20200411-0ubuntu1
+  - python3-minimal:amd64=3.8.2-0ubuntu2
+  - mime-support:all=3.64ubuntu1
+  - python3.8-minimal:amd64=3.8.2-1ubuntu1
+  - libreadline8:amd64=8.0-4
+  - python3.8:amd64=3.8.2-1ubuntu1
+  - libgssapi-krb5-2:amd64=1.17-6ubuntu4
+  - libpython3.8-minimal:amd64=3.8.2-1ubuntu1
+  - libc6:amd64=2.31-0ubuntu9
+  - zlib1g:amd64=1:1.2.11.dfsg-2ubuntu1
+  - python3:amd64=3.8.2-0ubuntu2
+  - libsqlite3-0:amd64=3.31.1-4
+  - libmpdec2:amd64=2.4.2-3
+  - libexpat1:amd64=2.2.9-1build1
+  - gcc-10-base:amd64=10-20200411-0ubuntu1
+  - libkrb5support0:amd64=1.17-6ubuntu4
+  - libncursesw6:amd64=6.2-0ubuntu2
+  - libkeyutils1:amd64=1.6-6ubuntu1
