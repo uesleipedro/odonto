@@ -4,7 +4,17 @@ import db from '../infra/database'
 export class ProcedimentoData {
     getProcedimento() {
         // return db.query('SELECT * FROM odonto.agenda')
-        return db.query(`SELECT * FROM odonto.procedimento`)
+        return db.query(`
+        SELECT  
+            p.id_procedimento,
+            (select descricao from odonto.procedimento_list where id_procedimento = p.id_procedimento) as procedimento,
+            p.dente,
+            p.estado,
+            p.observacao,
+            p.id_profissional,
+            p.face_dente,
+            p.adicionado
+        FROM odonto.procedimento p`)
     }
 
     async saveProcedimento(procedimento: any) {
