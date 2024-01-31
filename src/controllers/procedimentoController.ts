@@ -10,6 +10,11 @@ export class ProcedimentoController {
     return procedimentoData.getProcedimento()
   }
 
+  getProcedimentoById(id_procedimento: any) {
+
+    return procedimentoData.getProcedimentoById(id_procedimento)
+  }
+
   async saveProcedimento(procedimento: any) {
     let existingAgenda
     //if (existingAgenda =! null) throw new Error('Já existe uma empresa cadastrada com esse CNPJ/CPF')
@@ -23,7 +28,19 @@ export class ProcedimentoController {
       throw new Error()
     }
 
-  };
+  }
+
+  async updateProcedimento(procedimento: any) {
+    let existingAgenda: any = this.getProcedimentoById(procedimento.id_procedimento)
+    if (existingAgenda === '[]') throw new Error('Procedimento não encontrado no banco de dados')
+    try {
+      await procedimentoData.updateProcedimento(procedimento)
+    } catch (e) {
+      console.error(e)
+      throw new Error()
+    }
+
+  }
 
   async deleteProcedimento(id_procedimento: number) {
 

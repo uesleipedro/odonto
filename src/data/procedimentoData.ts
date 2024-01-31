@@ -7,20 +7,31 @@ export class ProcedimentoData {
         return db.query(`
         SELECT  
             p.id_procedimento,
-            (select descricao from odonto.procedimento_list where id_procedimento = p.id_procedimento) as procedimento,
+            (select descricao from odonto.procedimento_list where id_procedimento = p.id_procedimento_list) as procedimento,
             p.dente,
             p.estado,
             p.observacao,
             p.id_profissional,
             p.face_dente,
-            p.adicionado
+            p.adicionado,
+            p.preco,
+            p.id_procedimento_list
         FROM odonto.procedimento p`)
+    }
+
+    getProcedimentoById(id_procedimento: any) {
+        return db.query(`SELECT * FROM odonto.procedimento WHERE id_procedimento = $1`, [id_procedimento])
     }
 
     async saveProcedimento(procedimento: any) {
 
-        return db.one('INSERT INTO odonto.procedimento (dente, face_dente, estado, observacao, id_profissional, adicionado ) VALUES ($1, $2, $3, $4, $5, $6) returning id_procedimento',
-            [procedimento.dente, procedimento.face_dente, procedimento.estado, procedimento.observacao, procedimento.id_profissional, procedimento.adicionado])
+        return db.one('INSERT INTO odonto.procedimento (dente, face_dente, estado, observacao, id_profissional, adicionado, preco, id_procedimento_list ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) returning id_procedimento',
+            [procedimento.dente, procedimento.face_dente, procedimento.estado, procedimento.observacao, procedimento.id_profissional, procedimento.adicionado, procedimento.preco, procedimento.id_procedimento_list])
+    }
+
+    async updateProcedimento(procedimento: any) {
+        return db.none('UPDATE odonto.procedimento SET dente = $2, face_dente = $3, estado = $4, observacao = $5, id_profissional = $6, adicionado = $7, preco = $8, id_procedimento_list = $9 WHERE id_procedimento = $1',
+            [procedimento.id_procedimento, procedimento.dente, procedimento.face_dente, procedimento.estado, procedimento.observacao, procedimento.id_profissional, procedimento.adicionado, procedimento.preco, procedimento.id_procedimento_list])
     }
 
     deleteProcedimento(id_procedimento: number) {

@@ -1,22 +1,35 @@
-import express, { Request, Response, NextFunction } from 'express';
-import userRoute from './routes/userRoute'
-import { UserController } from './controllers/userController'
-import empresaRoute from './routes/empresaRoute'
-import agendaRoute from './routes/agendaRoute'
-import procedimentoRoute from './routes/procedimentoRoute'
-import pacienteRoute from './routes/pacienteRoute'
-import auth from './middlewares/validateToken'
-import procedimentoListRoute from './routes/procedimentoListRoute';
-const cors = require('cors')
+import express, { Request, Response, NextFunction } from "express";
+import userRoute from "./routes/userRoute";
+import empresaRoute from "./routes/empresaRoute";
+import agendaRoute from "./routes/agendaRoute";
+import procedimentoRoute from "./routes/procedimentoRoute";
+import pacienteRoute from "./routes/pacienteRoute";
+import auth from "./middlewares/validateToken";
+import procedimentoListRoute from "./routes/procedimentoListRoute";
+import dentesRoute from "./routes/dentesRoute";
+import faceDenteRoute from "./routes/faceDenteRoute";
+import anamneseRoute from "./routes/anamneseRoute";
+//const cors = require("cors");
+import cors from 'cors';
 
-export const app = express()
+export const app = express();
 
-app.use(express.json())
-app.use(cors());
+//app.use(cors);
 
-app.use('/user', userRoute)
-app.use('/empresa', empresaRoute)
-app.use('/agenda', agendaRoute)
-app.use('/paciente', pacienteRoute)
-app.use('/procedimento', procedimentoRoute)
-app.use('/procedimento_list', procedimentoListRoute)
+const allowedOrigins = ['*'];
+const options: cors.CorsOptions = {
+  origin: '*'
+};
+app.use(cors(options));
+
+app.use(express.json());
+
+app.use("/user", userRoute);
+app.use("/empresa", empresaRoute);
+app.use("/agenda", agendaRoute);
+app.use("/paciente", pacienteRoute);
+app.use("/procedimento", procedimentoRoute);
+app.use("/procedimento_list", procedimentoListRoute);
+app.use("/dentes", dentesRoute);
+app.use("/faceDente", faceDenteRoute);
+app.use("/anamnese", anamneseRoute);
