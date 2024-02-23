@@ -9,6 +9,8 @@ import procedimentoListRoute from "./routes/procedimentoListRoute";
 import dentesRoute from "./routes/dentesRoute";
 import faceDenteRoute from "./routes/faceDenteRoute";
 import anamneseRoute from "./routes/anamneseRoute";
+import orcamentoRoute from "./routes/orcamentoRoute";
+import procedimentoOrcamentoRoute from "./routes/procedimentoOrcamentoRoute";
 //const cors = require("cors");
 import cors from 'cors';
 
@@ -33,3 +35,5 @@ app.use("/procedimento_list", procedimentoListRoute);
 app.use("/dentes", dentesRoute);
 app.use("/faceDente", faceDenteRoute);
 app.use("/anamnese", anamneseRoute);
+app.use("/orcamento", orcamentoRoute);
+app.use("/procedimento_orcamento", procedimentoOrcamentoRoute);

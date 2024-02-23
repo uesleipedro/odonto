@@ -32,6 +32,7 @@ router.post('/', async function (req: Request, res: Response, next) {
 })
 
 router.put('/', async function (req: Request, res: Response, next) {
+    console.log('entrou na route')
     try {
         const response = await anamneseController.updateAnamnese(req.body)
         res.status(201).json(response)

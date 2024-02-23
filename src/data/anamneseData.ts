@@ -23,36 +23,10 @@ export class AnamneseData {
       [anamnese.id_paciente, anamnese.doenca, anamnese.descricao_doenca, anamnese.tratamento_medico, anamnese.gravidez, anamnese.mes_gravidez, anamnese.uso_medicacao, anamnese.descricao_medicacoes, anamnese.nome_medico_assistente, anamnese.telefone_medico_assistente, anamnese.alergia, anamnese.descricao_alergia, anamnese.fuma, anamnese.bebe, anamnese.pratica_exercicio, anamnese.ja_foi_operado, anamnese.descricao_operacao, anamnese.problema_cicatrizacao, anamnese.problema_anestesia, anamnese.problema_hemorragia, anamnese.doenca_reumatica, anamnese.problema_cardiaco, anamnese.problema_renal, anamnese.problema_gastrico, anamnese.problema_alergico, anamnese.problemas_articulares_reumatismo, anamnese.diabetes, anamnese.hipertensao, anamnese.outra, anamnese.descricao_outra, anamnese.historico_familiar_doenca, anamnese.descricao_historico_familiar_doenca]);
   }
 
- 
-
-	// "": "asdf",
-	// "": true,
-	// "descricao_alergia": "asdf",
-	// "fuma": true,
-	// "bebe": true,
-	// "pratica_exercicio": true,
-	// "ja_foi_operado": true,
-	// "descricao_operacao": "asdfdasf",
-	// "problema_anestesia": true,
-	// "problema_hemorragia": true,
-	// "doenca_reumatica": true,
-	// "problema_cardiaco": true,
-	// "problema_renal": true,
-	// "problema_gastrico": true,
-	// "problema_alergico": true,
-	// "problemas_articulares_reumatismo": true,
-	// "diabetes": true,
-	// "hipertensao": true,
-	// "outra": true,
-	// "descricao_outra": "asdf",
-	// "problema_cicatrizacao": true,
-	// "tratamento_medico": true,
-	// "historico_familiar_doenca": true,
-	// "descricao_historico_familiar_doenca": "asdfsaf"
-
   async updateAnamnese(anamnese: any) {
-    // return db.none('UPDATE odonto.anamnese SET id_paciente = $2, doenca = $3, descricao_doenca = $4, gravidez = $5, mes_gravidez = $6, uso_medicacao = $7, descricao_medicacoes = $8, nome_medico_assistente = $9, telefone_medico_assistente = $10, alergia = $11  WHERE id_procedimento = $1',
-    //     [procedimento.id_procedimento, procedimento.dente, procedimento.face_dente, procedimento.estado, procedimento.observacao, procedimento.id_profissional, procedimento.adicionado, procedimento.preco, procedimento.id_procedimento_list])
+	console.log('entrou no DATA')
+    return db.none('UPDATE odonto.anamnese SET id_paciente = $2, doenca = $3, descricao_doenca = $4, gravidez = $5, mes_gravidez = $6, uso_medicacao = $7, descricao_medicacoes = $8, nome_medico_assistente = $9, telefone_medico_assistente = $10, alergia = $11, descricao_alergia = $12, fuma = $13, bebe = $14, pratica_exercicio = $15, ja_foi_operado = $16, descricao_operacao = $17, problema_anestesia = $18, problema_hemorragia = $19, doenca_reumatica = $20, problema_cardiaco = $21, problema_renal = $22, problema_gastrico = $23, problema_alergico = $24, problemas_articulares_reumatismo = $25, diabetes = $26, hipertensao = $27, outra = $28, descricao_outra = $29, problema_cicatrizacao = $30, tratamento_medico = $31, historico_familiar_doenca = $32, descricao_historico_familiar_doenca = $33 WHERE id_anamnese = $1',
+        [anamnese.id_anamnese, anamnese.id_paciente, anamnese.doenca, anamnese.descricao_doenca, anamnese.gravidez, anamnese.mes_gravidez, anamnese.uso_medicacao, anamnese.descricao_medicacoes, anamnese.nome_medico_assistente, anamnese.telefone_medico_assistente, anamnese.alergia, anamnese.descricao_alergia, anamnese.fuma, anamnese.bebe, anamnese.pratica_exercicio, anamnese.ja_foi_operado, anamnese.descricao_operacao, anamnese.problema_anestesia, anamnese.problema_hemorragia, anamnese.doenca_reumatica, anamnese.problema_cardiaco, anamnese.problema_renal, anamnese.problema_gastrico, anamnese.problema_alergico, anamnese.problemas_articulares_reumatismo, anamnese.diabetes, anamnese.hipertensao, anamnese.outra, anamnese.descricao_outra, anamnese.problema_cicatrizacao, anamnese.tratamento_medico, anamnese.historico_familiar_doenca, anamnese.descricao_historico_familiar_doenca])
 }
 
   deletePaciente(id_paciente: number) {

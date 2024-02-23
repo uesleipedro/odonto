@@ -32,10 +32,11 @@ export class AnamneseController {
   }
 
   async updateAnamnese(anamnese: any) {
+    console.log('entrou na controller')
     let existingAnamnese: any = this.getAnamneseById(anamnese.id_anamnese)
     if (existingAnamnese === '[]') throw new Error('Anamnese não encontrada no banco de dados')
     try {
-      // await anamneseData.updateAnamnese()
+      await anamneseData.updateAnamnese(anamnese)
     } catch (e) {
       console.error(e)
       throw new Error()
