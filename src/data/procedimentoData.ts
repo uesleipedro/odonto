@@ -23,10 +23,15 @@ export class ProcedimentoData {
         return db.query(`SELECT * FROM odonto.procedimento WHERE id_procedimento = $1`, [id_procedimento])
     }
 
-    async saveProcedimento(procedimento: any) {
+    getProcedimentoByPaciente(id_paciente: any) {
+        console.log('entrou data', id_paciente)
+        return db.query(`SELECT * FROM odonto.procedimento WHERE id_paciente = $1`, [id_paciente])
+    }
 
-        return db.one('INSERT INTO odonto.procedimento (dente, face_dente, estado, observacao, id_profissional, adicionado, preco, id_procedimento_list ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) returning id_procedimento',
-            [procedimento.dente, procedimento.face_dente, procedimento.estado, procedimento.observacao, procedimento.id_profissional, procedimento.adicionado, procedimento.preco, procedimento.id_procedimento_list])
+    async saveProcedimento(procedimento: any) {
+console.log('pararparparpar --- ', procedimento)
+        return db.one('INSERT INTO odonto.procedimento (dente, face_dente, estado, observacao, id_profissional, adicionado, preco, id_procedimento_list, id_paciente ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) returning id_procedimento',
+            [procedimento.dente, procedimento.face_dente, procedimento.estado, procedimento.observacao, procedimento.id_profissional, procedimento.adicionado, procedimento.preco, procedimento.id_procedimento_list, procedimento.id_paciente])
     }
 
     async updateProcedimento(procedimento: any) {

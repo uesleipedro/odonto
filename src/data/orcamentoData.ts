@@ -15,9 +15,9 @@ export class OrcamentoData {
         FROM odonto.orcamento o`)
     }
 
-    // getProcedimentoById(id_procedimento: any) {
-    //     return db.query(`SELECT * FROM odonto.procedimento WHERE id_procedimento = $1`, [id_procedimento])
-    // }
+    getOrcamentoByPaciente(id_paciente: any) {
+        return db.query(`SELECT * FROM odonto.orcamento WHERE id_paciente = $1`, [id_paciente])
+    }
 
     async saveOrcamento(orcamento: any) {
 

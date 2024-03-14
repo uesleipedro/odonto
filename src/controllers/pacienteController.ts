@@ -8,13 +8,12 @@ export class PacienteController {
   getPacientes() {
 
     return pacienteData.getPacientes();
-  };
+  }
 
   async getPacienteById(id_paciente: number) {
     const paciente = await pacienteData.getPacienteById(id_paciente);
     if (!paciente) throw new Error('User not found');
-    return paciente;
-
+    return paciente
   }
 
   async savePaciente(paciente: any) {

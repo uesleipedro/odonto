@@ -13,6 +13,15 @@ router.get('/', async function (req: Request, res: Response, next) {
     }
 });
 
+router.get('/:id_paciente', async function (req: Request, res: Response, next) {
+    try {
+        const response = await procedimentoListController.getProcedimentoById(Number(req.params.id_paciente))
+        res.status(200).json(response)
+    } catch (e) {
+        next(e)
+    }
+});
+
 router.post('/', async function (req: Request, res: Response, next) {
     try {
         const response = await procedimentoListController.saveProcedimentoList(req.body)

@@ -15,6 +15,11 @@ export class ProcedimentoController {
     return procedimentoData.getProcedimentoById(id_procedimento)
   }
 
+  getProcedimentoByPaciente(id_paciente: any) {
+    console.log('entrou controller')
+    return procedimentoData.getProcedimentoByPaciente(id_paciente)
+  }
+
   async saveProcedimento(procedimento: any) {
     let existingAgenda
     //if (existingAgenda =! null) throw new Error('Já existe uma empresa cadastrada com esse CNPJ/CPF')

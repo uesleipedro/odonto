@@ -7,6 +7,10 @@ export class ProcedimentoListData {
         return db.query(`SELECT id_procedimento as value, descricao || ' - ' || categoria as label  FROM odonto.procedimento_list order by id_procedimento`)
     }
 
+    getProcedimentoById(id_paciente: number) {
+        return db.query(`SELECT id_procedimento as value, descricao || ' - ' || categoria as label  FROM odonto.procedimento_list WHERE id_paciente = $1 order by id_procedimento`, [id_paciente])
+    }
+
     async saveProcedimentoList(procedimento_list: any) {
 
         return db.one('INSERT INTO odonto.procedimento_list (dente, face_dente, estado, observacao, id_profissional, adicionado ) VALUES ($1, $2, $3, $4, $5, $6) returning id_procedimento_list',

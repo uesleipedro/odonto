@@ -13,10 +13,20 @@ router.get('/', async function (req: Request, res: Response, next) {
     }
 });
 
-router.get('/:id_procedimento', async (req: Request, res: Response, next) =>{
+router.get('/:id_procedimento', async (req: Request, res: Response, next) => {
     try {
         const response = await procedimentoController.getProcedimentoById(Number(req.params.id_procedimento));
         res.json(response);
+    } catch (e) {
+        next(e);
+    }
+});
+
+router.get('/paciente/:id_paciente', async (req: Request, res: Response, next) => {
+    console.log('entrou route')
+    try {
+        const response = await procedimentoController.getProcedimentoByPaciente(Number(req.params.id_paciente));
+        res.status(200).json(response);
     } catch (e) {
         next(e);
     }

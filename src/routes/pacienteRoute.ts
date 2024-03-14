@@ -13,10 +13,19 @@ router.get('/', async function (req: Request, res: Response, next) {
     }
 })
 
+router.get('/:id_paciente', async (req: Request, res: Response, next) => {
+    try {
+        const response = await pacienteController.getPacienteById(Number(req.params.id_paciente));
+        res.status(200).json(response);
+    } catch (e) {
+        next(e);
+    }
+})
+
 router.post('/', async function (req: Request, res: Response, next) {
     try {
-       const response = await pacienteController.savePaciente(req.body)
-       res.status(201).json(response)
+        const response = await pacienteController.savePaciente(req.body)
+        res.status(201).json(response)
     } catch (e: any) {
         next(e)
     }

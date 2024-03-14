@@ -1,27 +1,26 @@
 //import { Empresa } from '../utils/types'
-import { OrcamentoData } from '../data/orcamentoData'
+import { PagamentoData } from '../data/pagamentoData'
 import { Request, Response, NextFunction } from 'express'
 
-const orcamentoData = new OrcamentoData()
+const pagamentoData = new PagamentoData()
 
-export class OrcamentoController {
-  getOrcamento() {
-    console.log('entrou controller')
-    return orcamentoData.getOrcamento()
+export class PagamentoController {
+  getPagamento() {
+    return pagamentoData.getPagamento()
   }
 
-  getOrcamentoByPacienet(id_paciente: any) {
+  getPagamentoByPaciente(id_paciente: any) {
 
-    return orcamentoData.getOrcamentoByPaciente(id_paciente)
+    return pagamentoData.getPagamentoByPaciente(id_paciente)
   }
 
-  async saveOrcamento(orcamento: any) {
+  async savePagamento(pagamento: any) {
     let existingAgenda
     //if (existingAgenda =! null) throw new Error('Já existe uma empresa cadastrada com esse CNPJ/CPF')
     try {
 
-      const success = await orcamentoData.saveOrcamento(orcamento)
-      if (!success) throw new Error("Erro ao cadastrar orçamento")
+      const success = await pagamentoData.savePagamento(pagamento)
+      if (!success) throw new Error("Erro ao cadastrar pagamento")
       return success
 
     } catch (e) {

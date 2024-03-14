@@ -10,6 +10,10 @@ export class ProcedimentoListController {
     return procedimentoListData.getProcedimentoList()
   }
 
+  getProcedimentoById(id_paciente: number) {
+    return procedimentoListData.getProcedimentoById(id_paciente)
+  }
+
   async saveProcedimentoList(procedimento_list: any) {
     let existingAgenda
     //if (existingAgenda =! null) throw new Error('Já existe uma empresa cadastrada com esse CNPJ/CPF')

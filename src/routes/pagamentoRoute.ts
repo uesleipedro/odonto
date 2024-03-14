@@ -1,13 +1,12 @@
 import { Request, Response, Router } from 'express'
-import { OrcamentoController } from '../controllers/orcamentoController'
+import { PagamentoController } from '../controllers/pagamentoController'
 
-const orcamentoController = new OrcamentoController()
+const pagamentoController = new PagamentoController()
 const router = Router()
 
 router.get('/', async function (req: Request, res: Response, next) {
-    console.log('entrou route')
     try {
-        const response = await orcamentoController.getOrcamento()
+        const response = await pagamentoController.getPagamento()
         res.status(200).json(response)
     } catch (e) {
         next(e)
@@ -16,7 +15,7 @@ router.get('/', async function (req: Request, res: Response, next) {
 
 router.get('/paciente/:id_paciente', async (req: Request, res: Response, next) => {
     try {
-        const response = await orcamentoController.getOrcamentoByPacienet(Number(req.params.id_paciente));
+        const response = await pagamentoController.getPagamentoByPaciente(Number(req.params.id_paciente));
         res.json(response);
     } catch (e) {
         next(e);
@@ -25,7 +24,7 @@ router.get('/paciente/:id_paciente', async (req: Request, res: Response, next) =
 
 router.post('/', async function (req: Request, res: Response, next) {
     try {
-        const response = await orcamentoController.saveOrcamento(req.body)
+        const response = await pagamentoController.savePagamento(req.body)
         res.status(201).json(response)
     } catch (e: any) {
         next(e)
