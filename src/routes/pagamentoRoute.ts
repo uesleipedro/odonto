@@ -31,14 +31,14 @@ router.post('/', async function (req: Request, res: Response, next) {
     }
 });
 
-// router.put('/', async function (req: Request, res: Response, next) {
-//     try {
-//         const response = await procedimentoController.updateProcedimento(req.body)
-//         res.status(201).json(response)
-//     } catch (e: any) {
-//         next(e)
-//     }
-// });
+router.put('/finalizar', async function (req: Request, res: Response, next) {
+    try {
+        const response = await pagamentoController.updateDataPagamento(req.body)
+        res.status(201).json(response)
+    } catch (e: any) {
+        next(e)
+    }
+});
 
 // router.delete('/:id_procedimento', async (req: Request, res: Response) => {
 //     const response = await procedimentoController.deleteProcedimento(Number(req.params.id_procedimento))

@@ -31,17 +31,16 @@ export class OrcamentoController {
 
   }
 
-  // async updateProcedimento(procedimento: any) {
-  //   let existingAgenda: any = this.getProcedimentoById(procedimento.id_procedimento)
-  //   if (existingAgenda === '[]') throw new Error('Procedimento não encontrado no banco de dados')
-  //   try {
-  //     await procedimentoData.updateProcedimento(procedimento)
-  //   } catch (e) {
-  //     console.error(e)
-  //     throw new Error()
-  //   }
+  async updateStatusOrcamento(orcamento: any) {
+    console.log('----------------  controller', orcamento)
+    try {
+      await orcamentoData.updateStatusOrcamento(orcamento)
+    } catch (e) {
+      console.error(e)
+      throw new Error()
+    }
 
-  // }
+  }
 
   // async deleteProcedimento(id_procedimento: number) {
 

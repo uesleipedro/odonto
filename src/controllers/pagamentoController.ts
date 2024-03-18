@@ -30,17 +30,15 @@ export class PagamentoController {
 
   }
 
-  // async updateProcedimento(procedimento: any) {
-  //   let existingAgenda: any = this.getProcedimentoById(procedimento.id_procedimento)
-  //   if (existingAgenda === '[]') throw new Error('Procedimento não encontrado no banco de dados')
-  //   try {
-  //     await procedimentoData.updateProcedimento(procedimento)
-  //   } catch (e) {
-  //     console.error(e)
-  //     throw new Error()
-  //   }
+  async updateDataPagamento(pagamento: any) {
+    try {
+      await pagamentoData.updateDataPagamento(pagamento)
+    } catch (e) {
+      console.error(e)
+      throw new Error()
+    }
 
-  // }
+  }
 
   // async deleteProcedimento(id_procedimento: number) {
 

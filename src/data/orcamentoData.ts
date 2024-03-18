@@ -16,7 +16,7 @@ export class OrcamentoData {
     }
 
     getOrcamentoByPaciente(id_paciente: any) {
-        return db.query(`SELECT * FROM odonto.orcamento WHERE id_paciente = $1`, [id_paciente])
+        return db.query(`SELECT * FROM odonto.orcamento WHERE id_paciente = $1 AND status = 'pendente'`, [id_paciente])
     }
 
     async saveOrcamento(orcamento: any) {
@@ -25,10 +25,11 @@ export class OrcamentoData {
             [orcamento.id_empresa, orcamento.id_profissional, orcamento.id_paciente, orcamento.preco, orcamento.status])
     }
 
-    // async updateProcedimento(procedimento: any) {
-    //     return db.none('UPDATE odonto.procedimento SET dente = $2, face_dente = $3, estado = $4, observacao = $5, id_profissional = $6, adicionado = $7, preco = $8, id_procedimento_list = $9 WHERE id_procedimento = $1',
-    //         [procedimento.id_procedimento, procedimento.dente, procedimento.face_dente, procedimento.estado, procedimento.observacao, procedimento.id_profissional, procedimento.adicionado, procedimento.preco, procedimento.id_procedimento_list])
-    // }
+    async updateStatusOrcamento(orcamento: any) {
+        console.log('-------------------- DATA ', orcamento, orcamento.id_orcamento, orcamento.status)
+        return db.none('UPDATE odonto.orcamento SET status = $2 WHERE id_orcamento = $1',
+            [orcamento.id_orcamento, orcamento.status])
+    }
 
     // deleteProcedimento(id_procedimento: number) {
 

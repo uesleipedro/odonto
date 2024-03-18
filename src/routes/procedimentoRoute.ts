@@ -23,7 +23,6 @@ router.get('/:id_procedimento', async (req: Request, res: Response, next) => {
 });
 
 router.get('/paciente/:id_paciente', async (req: Request, res: Response, next) => {
-    console.log('entrou route')
     try {
         const response = await procedimentoController.getProcedimentoByPaciente(Number(req.params.id_paciente));
         res.status(200).json(response);
@@ -44,6 +43,15 @@ router.post('/', async function (req: Request, res: Response, next) {
 router.put('/', async function (req: Request, res: Response, next) {
     try {
         const response = await procedimentoController.updateProcedimento(req.body)
+        res.status(201).json(response)
+    } catch (e: any) {
+        next(e)
+    }
+});
+
+router.put('/status', async function (req: Request, res: Response, next) {
+    try {
+        const response = await procedimentoController.updateStatusProcedimento(req.body)
         res.status(201).json(response)
     } catch (e: any) {
         next(e)

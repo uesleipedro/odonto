@@ -47,6 +47,18 @@ export class ProcedimentoController {
 
   }
 
+  async updateStatusProcedimento(procedimento: any) {
+    let existingAgenda: any = this.getProcedimentoById(procedimento.id_procedimento)
+    if (existingAgenda === '[]') throw new Error('Procedimento não encontrado no banco de dados')
+    try {
+      await procedimentoData.updateStatusProcedimento(procedimento)
+    } catch (e) {
+      console.error(e)
+      throw new Error()
+    }
+
+  }
+
   async deleteProcedimento(id_procedimento: number) {
 
     return await procedimentoData.deleteProcedimento(id_procedimento);
