@@ -23,6 +23,7 @@ const allowedOrigins = ['*'];
 const options: cors.CorsOptions = {
   origin: '*'
 };
+
 app.use(cors(options));
 
 app.use(express.json());
