@@ -49,6 +49,15 @@ router.put('/', async function (req: Request, res: Response, next) {
     }
 });
 
+router.put('/estorno/:id_orcamento', async function (req: Request, res: Response, next) {
+    try {
+        const response = await procedimentoController.estornoProcedimento(req.params.id_orcamento)
+        res.status(201).json(response)
+    } catch (e: any) {
+        next(e)
+    }
+});
+
 router.put('/status', async function (req: Request, res: Response, next) {
     try {
         const response = await procedimentoController.updateStatusProcedimento(req.body)

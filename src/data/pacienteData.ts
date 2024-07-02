@@ -24,6 +24,11 @@ export class PacienteData {
       [paciente.nome, paciente.cpf, paciente.telefone_fixo, paciente.telefone_movel, paciente.dt_nascimento, paciente.rg, paciente.sexo, paciente.estado_civil, paciente.email, paciente.plano_saude, paciente.numero_carteirinha, paciente.nome_responsavel, paciente.telefone_responsavel, paciente.email_responsavel]);
   }
 
+  updatePaciente(paciente: any) {
+    return db.none('UPDATE odonto.paciente SET nome = $2, cpf = $3, telefone_fixo = $4, telefone_movel = $5, dt_nascimento = $6, rg = $7, sexo = $8, estado_civil = $9, email = $10, plano_saude = $11, numero_carteirinha = $12, nome_responsavel = $13, telefone_responsavel = $14, email_responsavel = $15 WHERE id_paciente = $1',
+      [Number(paciente.id_paciente), paciente.nome, paciente.cpf, paciente.telefone_fixo, paciente.telefone_movel, paciente.dt_nascimento instanceof Date && !isNaN(paciente.dt_nascimento) ? paciente.dt_nascimento : null, paciente.rg, paciente.sexo, paciente.estado_civil, paciente.email, paciente.plano_saude, paciente.numero_carteirinha, paciente.nome_responsavel, paciente.telefone_responsavel, paciente.email_responsavel])
+  }
+
   deletePaciente(id_paciente: number) {
 
     return db.none('DELETE FROM odonto.paciente WHERE id_paciente = $1', [id_paciente]);

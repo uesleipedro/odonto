@@ -24,6 +24,14 @@ export class AnamneseController {
 
   }
 
+  async getCheckExists(id_paciente: number) {
+    const anamnese = await anamneseData.getCheckExistes(id_paciente)
+    console.log("xxxxxxxxxxxxx: ", anamnese)
+    if (!anamnese) throw new Error('Anamnese not found')
+    return anamnese
+
+  }
+
   async saveAnamnese(anamnese: any) {
     // const existingAnamnese = await pacienteData.getPacienteByCpf(String(paciente.cpf));
     // if (existingPaciente) throw new Error('Já existe uma um paciente cadastrado com esse CPF');

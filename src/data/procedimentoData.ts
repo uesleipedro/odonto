@@ -15,8 +15,10 @@ export class ProcedimentoData {
             p.face_dente,
             p.adicionado,
             p.preco,
-            p.id_procedimento_list
-        FROM odonto.procedimento p`)
+            p.id_procedimento_list,
+            p.orcado
+        FROM odonto.procedimento p
+        WHERE orcado = false`)
     }
 
     getProcedimentoById(id_procedimento: any) {
@@ -35,6 +37,7 @@ export class ProcedimentoData {
             adicionado,
             odonto.procedimento.preco,
             odonto.procedimento_list.descricao as procedimento,
+            odonto.procedimento_list.id_procedimento as id_procedimento_list,
             id_paciente,
             orcado
         FROM odonto.procedimento
@@ -54,6 +57,11 @@ export class ProcedimentoData {
     async updateProcedimento(procedimento: any) {
         return db.none('UPDATE odonto.procedimento SET dente = $2, face_dente = $3, estado = $4, observacao = $5, id_profissional = $6, adicionado = $7, preco = $8, id_procedimento_list = $9, orcado = $10, id_paciente = $11 WHERE id_procedimento = $1',
             [procedimento.id_procedimento, procedimento.dente, procedimento.face_dente, procedimento.estado, procedimento.observacao, procedimento.id_profissional, procedimento.adicionado, procedimento.preco, procedimento.id_procedimento_list, procedimento.orcado, procedimento.id_paciente])
+    }
+
+    async estornoProcedimento(id_orcamento: any) {
+        return db.none(`update odonto.procedimento set orcado = false where odonto.procedimento.id_procedimento in (SELECT id_procedimento FROM odonto.procedimento_orcamento WHERE id_orcamento = $1) `,
+            [id_orcamento])
     }
 
     async updateStatusProcedimento(procedimento: any) {

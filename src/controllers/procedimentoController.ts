@@ -47,6 +47,18 @@ export class ProcedimentoController {
 
   }
 
+  async estornoProcedimento(id_orcamento: any) {
+    // let existingAgenda: any = this.getProcedimentoById(procedimento.id_procedimento)
+    // if (existingAgenda === '[]') throw new Error('Procedimento não encontrado no banco de dados')
+    try {
+      await procedimentoData.estornoProcedimento(id_orcamento)
+    } catch (e) {
+      console.error(e)
+      throw new Error()
+    }
+
+  }
+
   async updateStatusProcedimento(procedimento: any) {
     let existingAgenda: any = this.getProcedimentoById(procedimento.id_procedimento)
     if (existingAgenda === '[]') throw new Error('Procedimento não encontrado no banco de dados')

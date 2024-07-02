@@ -21,6 +21,11 @@ export class PagamentoData {
             [pagamento.id_pagamento, pagamento.status, pagamento.data_pagamento])
     }
 
+    async estornoPagamento(id_pagamento: any) {
+        return db.none(`UPDATE odonto.pagamento SET status = 'Cancelado' WHERE id_pagamento = $1`,
+            [id_pagamento])
+    }
+
     // async updateProcedimento(procedimento: any) {
     //     return db.none('UPDATE odonto.procedimento SET dente = $2, face_dente = $3, estado = $4, observacao = $5, id_profissional = $6, adicionado = $7, preco = $8, id_procedimento_list = $9 WHERE id_procedimento = $1',
     //         [procedimento.id_procedimento, procedimento.dente, procedimento.face_dente, procedimento.estado, procedimento.observacao, procedimento.id_profissional, procedimento.adicionado, procedimento.preco, procedimento.id_procedimento_list])

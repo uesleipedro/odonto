@@ -40,6 +40,16 @@ export class PagamentoController {
 
   }
 
+  async estornoPagamento(id_pagamento: any) {
+    try {
+      await pagamentoData.estornoPagamento(id_pagamento)
+    } catch (e) {
+      console.error(e)
+      throw new Error()
+    }
+
+  }
+
   // async deleteProcedimento(id_procedimento: number) {
 
   //   return await procedimentoData.deleteProcedimento(id_procedimento);

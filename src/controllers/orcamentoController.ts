@@ -42,8 +42,18 @@ export class OrcamentoController {
 
   }
 
-  // async deleteProcedimento(id_procedimento: number) {
+  async estornarOrcamento(id_orcamento: any) {
+    try {
+      await orcamentoData.estornarOrcamento(id_orcamento)
+    } catch (e) {
+      console.error(e)
+      throw new Error()
+    }
 
-  //   return await procedimentoData.deleteProcedimento(id_procedimento);
-  // }
+  }
+
+  async deleteOrcamento(id_orcamento: number) {
+console.log('delete controller', id_orcamento)
+    return await orcamentoData.deleteOrcamento(id_orcamento);
+  }
 }

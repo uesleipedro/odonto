@@ -4,7 +4,7 @@ import db from '../infra/database'
 export class AgendaData {
     getAgenda() {
         // return db.query('SELECT * FROM odonto.agenda')
-        return db.query(`SELECT descricao as title, to_char(start_date_time, 'YYYY-MM-DD"T"HH24:MI:SS') as start, to_char(end_date_time, 'YYYY-MM-DD"T"HH24:MI:SS') as end FROM odonto.agenda`)
+        return db.query(`SELECT id_agenda as id, descricao as title, to_char(start_date_time, 'YYYY-MM-DD"T"HH24:MI:SS') as start, to_char(end_date_time, 'YYYY-MM-DD"T"HH24:MI:SS') as end, id_empresa, id_paciente, id_profissional, obs, descricao, dia_inteiro, status FROM odonto.agenda`)
     }
 
     async saveAgenda(agenda: any) {

@@ -12,6 +12,7 @@ import anamneseRoute from "./routes/anamneseRoute";
 import orcamentoRoute from "./routes/orcamentoRoute";
 import pagamentoRoute from "./routes/pagamentoRoute";
 import procedimentoOrcamentoRoute from "./routes/procedimentoOrcamentoRoute";
+import contasReceberRoute from "./routes/contasReceberRoute";
 //const cors = require("cors");
 import cors from 'cors';
 
@@ -40,3 +41,4 @@ app.use("/anamnese", anamneseRoute);
 app.use("/orcamento", orcamentoRoute);
 app.use("/pagamento", pagamentoRoute);
 app.use("/procedimento_orcamento", procedimentoOrcamentoRoute);
+app.use("/contas_receber", contasReceberRoute);

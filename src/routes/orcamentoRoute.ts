@@ -32,6 +32,15 @@ router.put('/status', async function (req: Request, res: Response, next) {
     }
 });
 
+router.put('/estornar/:id_orcamento', async function (req: Request, res: Response, next) {
+    try {
+        const response = await orcamentoController.estornarOrcamento(req.params.id_orcamento)
+        res.status(201).json(response)
+    } catch (e: any) {
+        next(e)
+    }
+});
+
 router.post('/', async function (req: Request, res: Response, next) {
     try {
         const response = await orcamentoController.saveOrcamento(req.body)
@@ -50,9 +59,10 @@ router.post('/', async function (req: Request, res: Response, next) {
 //     }
 // });
 
-// router.delete('/:id_procedimento', async (req: Request, res: Response) => {
-//     const response = await procedimentoController.deleteProcedimento(Number(req.params.id_procedimento))
-//     res.status(204).json(response)
-// })
+router.delete('/:id_orcamento', async (req: Request, res: Response) => {
+    console.log('delete route', req.params.id_orcamento)
+    const response = await orcamentoController.deleteOrcamento(Number(req.params.id_orcamento))
+    res.status(204).json(response)
+})
 
 export default router

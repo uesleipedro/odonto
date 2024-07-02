@@ -23,6 +23,18 @@ export class PacienteController {
     return pacienteData.savePaciente(paciente);
   }
 
+  async updatePaciente(paciente: any) {
+    // let existingPaciente: any = this.getAnamneseById(anamnese.id_anamnese)
+    // if (existingAnamnese === '[]') throw new Error('Anamnese não encontrada no banco de dados')
+    try {
+      await pacienteData.updatePaciente(paciente)
+    } catch (e) {
+      console.error(e)
+      throw new Error()
+    }
+
+  }
+
   async deletePaciente(id_paciente: number) {
 
     return await pacienteData.deletePaciente(id_paciente);

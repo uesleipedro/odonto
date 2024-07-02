@@ -20,7 +20,19 @@ router.get('/:id_paciente', async (req: Request, res: Response, next) => {
     } catch (e) {
         next(e);
     }
-});
+})
+
+router.get('/check_exists/:id_paciente', async (req: Request, res: Response, next) => {
+    try {
+        console.log('route anamnese: entrou ')
+        console.log('route anamnese: ', req.params.id_paciente)
+        const response = await anamneseController.getCheckExists(Number(req.params.id_paciente));
+        console.log('route anamnese response: ', response)
+        res.json(response);
+    } catch (e) {
+        next(e);
+    }
+})
 
 router.post('/', async function (req: Request, res: Response, next) {
     try {
