@@ -1,11 +1,9 @@
 import db from '../infra/database'
-//import { Empresa } from '../utils/types'
 
 export class ProcedimentoData {
-    getProcedimento() {
-        // return db.query('SELECT * FROM odonto.agenda')
+    async getProcedimento() {
         return db.query(`
-        SELECT  
+        SELECT
             p.id_procedimento,
             (select descricao from odonto.procedimento_list where id_procedimento = p.id_procedimento_list) as procedimento,
             p.dente,
@@ -21,11 +19,11 @@ export class ProcedimentoData {
         WHERE orcado = false`)
     }
 
-    getProcedimentoById(id_procedimento: any) {
+    async getProcedimentoById(id_procedimento: any) {
         return db.query(`SELECT * FROM odonto.procedimento WHERE id_procedimento = $1`, [id_procedimento])
     }
 
-    getProcedimentoByPaciente(id_paciente: any) {
+    async getProcedimentoByPaciente(id_paciente: any) {
         return db.query(`
         SELECT 
             odonto.procedimento.id_procedimento,
