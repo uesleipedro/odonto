@@ -25,4 +25,17 @@ export class AgendaController {
     }
 
   };
+
+  async updateAgenda(agenda: any) {
+    //let existingAnamnese: any = this.getAnamneseById(anamnese.id_anamnese)
+    //if (existingAnamnese === '[]') throw new Error('Anamnese não encontrada no banco de dados')
+    console.log("agenda", agenda)
+    try {
+      await agendaData.updateAgenda(agenda)
+    } catch (e) {
+      console.error(e)
+      throw new Error()
+    }
+
+  }
 }

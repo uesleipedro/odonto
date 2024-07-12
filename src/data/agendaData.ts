@@ -13,4 +13,9 @@ export class AgendaData {
             [agenda.id_empresa, agenda.id_paciente, agenda.id_profissional, agenda.start_date_time, agenda.end_date_time, agenda.descricao, agenda.obs, agenda.dia_inteiro, agenda.status])
     }
 
+  async updateAgenda(agenda: any) {
+    console.log("dataAgenda ", agenda)
+    return db.none('UPDATE odonto.agenda SET id_paciente = $2, id_profissional = $3, start_date_time = $4, end_date_time = $5, descricao = $6, obs = $7, dia_inteiro = $8, status = $9 WHERE id_agenda = $1',
+      [agenda.id, agenda.id_paciente, agenda.id_profissional, agenda.start, agenda.end, agenda.descricao, agenda.obs, agenda.dia_inteiro, agenda.status])
+  }
 }
