@@ -1,5 +1,4 @@
 import db from '../infra/database'
-//import { Empresa } from '../utils/types'
 
 export class PagamentoData {
     getPagamento() {
@@ -26,14 +25,12 @@ export class PagamentoData {
             [id_pagamento])
     }
 
-    // async updateProcedimento(procedimento: any) {
-    //     return db.none('UPDATE odonto.procedimento SET dente = $2, face_dente = $3, estado = $4, observacao = $5, id_profissional = $6, adicionado = $7, preco = $8, id_procedimento_list = $9 WHERE id_procedimento = $1',
-    //         [procedimento.id_procedimento, procedimento.dente, procedimento.face_dente, procedimento.estado, procedimento.observacao, procedimento.id_profissional, procedimento.adicionado, procedimento.preco, procedimento.id_procedimento_list])
-    // }
-
-    // deleteProcedimento(id_procedimento: number) {
-
-    //     return db.none('DELETE FROM odonto.procedimento WHERE id_procedimento = $1', [id_procedimento]);
-    // }
+    async deletePagamento(id_orcamento: number) {
+      try{     
+        return await db.one('DELETE FROM odonto.pagamento WHERE id_orcamento = $1 RETURNING id_pagamento', [id_orcamento]);
+      }catch(error: any){
+        return error.message
+      }
+    }
 
 }

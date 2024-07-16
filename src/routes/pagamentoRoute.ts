@@ -50,9 +50,9 @@ router.put('/estornar/:id_pagamento', async function (req: Request, res: Respons
 });
 
 
-// router.delete('/:id_procedimento', async (req: Request, res: Response) => {
-//     const response = await procedimentoController.deleteProcedimento(Number(req.params.id_procedimento))
-//     res.status(204).json(response)
-// })
+router.delete('/:id_orcamento', async (req: Request, res: Response) => {
+  const response = await pagamentoController.deletePagamento(Number(req.params.id_orcamento))
+  res.status(204).json(response)
+})
 
 export default router

@@ -20,7 +20,13 @@ export class ContasReceberData {
 
   saveContaReceber(conta: any) {
 
-    return db.one('INSERT INTO odonto.contas_receber (id_pagamento, nr_parcela, valor, dt_vencimento, status, id_paciente) VALUES ($1, $2, $3, $4, $5, $6) returning *',
-      [conta.id_pagamento, conta.nr_parcela, conta.valor, conta.dt_vencimento, conta.status, conta.id_paciente]);
+    return db.one('INSERT INTO odonto.contas_receber (id_pagamento, nr_parcela, valor, dt_vencimento, status, id_paciente, id_pagamento) VALUES ($1, $2, $3, $4, $5, $6, $7) returning *',
+      [conta.id_pagamento, conta.nr_parcela, conta.valor, conta.dt_vencimento, conta.status, conta.id_paciente, conta.id_pagamento]);
   }
+
+  async deleteContasReceber(id_pagamento: number) {
+
+    return db.none('DELETE FROM odonto.contas_receber WHERE id_pagamento = $1', [id_pagamento]);
+  }
+
 }

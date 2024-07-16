@@ -42,4 +42,10 @@ export class ContasReceberController {
     }
 
   }
+
+  async deleteContasReceber(id_pagamento: number) {
+
+    return await contasReceberData.deleteContasReceber(id_pagamento);
+  }
+
 }

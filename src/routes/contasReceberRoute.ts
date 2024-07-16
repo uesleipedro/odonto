@@ -67,9 +67,9 @@ router.post('/', async function (req: Request, res: Response, next) {
 //     }
 // });
 
-// router.delete('/:id_procedimento', async (req: Request, res: Response) => {
-//     const response = await procedimentoController.deleteProcedimento(Number(req.params.id_procedimento))
-//     res.status(204).json(response)
-// })
+router.delete('/:id_pagamento', async (req: Request, res: Response) => {
+    const response = await contasReceberController.deleteContasReceber(Number(req.params.id_pagamento))
+    res.status(204).json(response)
+})
 
 export default router

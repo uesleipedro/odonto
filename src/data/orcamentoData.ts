@@ -1,5 +1,4 @@
 import db from '../infra/database'
-//import { Empresa } from '../utils/types'
 
 export class OrcamentoData {
     getOrcamento() {
@@ -26,7 +25,6 @@ export class OrcamentoData {
     }
 
     async updateStatusOrcamento(orcamento: any) {
-        console.log('-------------------- DATA ', orcamento, orcamento.id_orcamento, orcamento.status)
         return db.none('UPDATE odonto.orcamento SET status = $2 WHERE id_orcamento = $1',
             [orcamento.id_orcamento, orcamento.status])
     }
@@ -37,7 +35,6 @@ export class OrcamentoData {
     }
 
     deleteOrcamento(id_orcamento: number) {
-        console.log("delete data ", id_orcamento)
         return db.none('DELETE FROM odonto.orcamento WHERE id_orcamento = $1', [id_orcamento]);
     }
 

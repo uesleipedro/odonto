@@ -32,7 +32,6 @@ export class OrcamentoController {
   }
 
   async updateStatusOrcamento(orcamento: any) {
-    console.log('----------------  controller', orcamento)
     try {
       await orcamentoData.updateStatusOrcamento(orcamento)
     } catch (e) {
@@ -53,7 +52,6 @@ export class OrcamentoController {
   }
 
   async deleteOrcamento(id_orcamento: number) {
-console.log('delete controller', id_orcamento)
     return await orcamentoData.deleteOrcamento(id_orcamento);
   }
 }

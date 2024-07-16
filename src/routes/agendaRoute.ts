@@ -31,4 +31,9 @@ router.put('/', async function (req: Request, res: Response, next) {
     }
 })
 
+ router.delete('/:id_agenda', async (req: Request, res: Response) => {
+     const response = await agendaController.deleteAgenda(Number(req.params.id_agenda))
+     res.status(204).json(response)
+ })
+
 export default router

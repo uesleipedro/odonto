@@ -50,8 +50,8 @@ export class PagamentoController {
 
   }
 
-  // async deleteProcedimento(id_procedimento: number) {
+  async deletePagamento(id_orcamento: number) {
 
-  //   return await procedimentoData.deleteProcedimento(id_procedimento);
-  // }
+    return await pagamentoData.deletePagamento(id_orcamento);
+  }
 }
