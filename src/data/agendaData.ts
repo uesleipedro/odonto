@@ -18,6 +18,11 @@ export class AgendaData {
       [agenda.id, agenda.id_paciente, agenda.id_profissional, agenda.start, agenda.end, agenda.descricao, agenda.obs, agenda.dia_inteiro, agenda.status])
   }
 
+  async updateDataHora(agenda: any) {
+    return db.none(`UPDATE odonto.agenda SET start = $2, "end" = $2 WHERE id_agenda = $1`,
+      [agenda.id_agenda, agenda.start, agenda.end])
+  }
+
   async deleteAgenda(id_agenda: number) {
     return db.none('DELETE FROM odonto.agenda WHERE id_agenda = $1', [id_agenda]); 
   }

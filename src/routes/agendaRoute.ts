@@ -31,6 +31,15 @@ router.put('/', async function (req: Request, res: Response, next) {
     }
 })
 
+router.put('/updateDataHora', async function (req: Request, res: Response, next) {
+    try {
+        const response = await agendaController.updateDataHora(req.body)
+        res.status(201).json(response)
+    } catch (e: any) {
+        next(e)
+    }
+})
+
  router.delete('/:id_agenda', async (req: Request, res: Response) => {
      const response = await agendaController.deleteAgenda(Number(req.params.id_agenda))
      res.status(204).json(response)

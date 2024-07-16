@@ -39,6 +39,16 @@ export class AgendaController {
 
   }
 
+  async updateDataHora(agenda: any) {
+    try {
+      await agendaData.updateDataHora(agenda)
+    } catch (e) {
+      console.error(e)
+      throw new Error()
+    }
+
+  }
+
   async deleteAgenda(id_agenda: number) {
 
     return await agendaData.deleteAgenda(id_agenda);
