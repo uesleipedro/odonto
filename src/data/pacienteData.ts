@@ -3,7 +3,7 @@ import { Empresa } from '../utils/types'
 
 export class PacienteData {
   getPacientes() {
-    return db.query('SELECT * FROM odonto.paciente')
+    return db.query('SELECT * FROM odonto.paciente order by nome')
   }
 
   getPacienteById(id_paciente: number) {

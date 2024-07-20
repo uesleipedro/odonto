@@ -19,7 +19,7 @@ export class AgendaData {
   }
 
   async updateDataHora(agenda: any) {
-    return db.none(`UPDATE odonto.agenda SET start = $2, "end" = $2 WHERE id_agenda = $1`,
+    return db.none(`UPDATE odonto.agenda SET start = $2, "end" = $3 WHERE id_agenda = $1`,
       [agenda.id_agenda, agenda.start, agenda.end])
   }
 
