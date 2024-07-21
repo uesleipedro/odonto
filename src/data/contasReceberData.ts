@@ -18,7 +18,6 @@ export class ContasReceberData {
   }
 
   saveContaReceber(conta: any) {
-    console.log(" CONTAS RECEBER: ", conta)
     return db.one('INSERT INTO odonto.contas_receber (id_pagamento, nr_parcela, valor, dt_vencimento, status, id_paciente) VALUES ($1, $2, $3, $4, $5, $6) returning *',
       [conta.id_pagamento, conta.nr_parcela, conta.valor, conta.dt_vencimento, conta.status, conta.id_paciente]);
   }
