@@ -3,8 +3,8 @@ import { Empresa } from '../utils/types'
 
 export class ContasReceberData {
 
-  getContasReceberByPaciente(id_paciente: any) {
-    return db.query(`SELECT * FROM odonto.contas_receber WHERE id_paciente = $1 ORDER BY id_pagamento DESC, nr_parcela ASC`, [id_paciente])
+  getContasReceberByPaciente(id_paciente: number, id_empresa: number) {
+    return db.query(`SELECT * FROM odonto.contas_receber WHERE id_paciente = $1 AND id_empresa = $2 ORDER BY id_pagamento DESC, nr_parcela ASC`, [id_paciente, id_empresa])
   }
 
   async updateDataPagamento(pagamento: any) {
@@ -18,8 +18,8 @@ export class ContasReceberData {
   }
 
   saveContaReceber(conta: any) {
-    return db.one('INSERT INTO odonto.contas_receber (id_pagamento, nr_parcela, valor, dt_vencimento, status, id_paciente) VALUES ($1, $2, $3, $4, $5, $6) returning *',
-      [conta.id_pagamento, conta.nr_parcela, conta.valor, conta.dt_vencimento, conta.status, conta.id_paciente]);
+    return db.one('INSERT INTO odonto.contas_receber (id_pagamento, nr_parcela, valor, dt_vencimento, status, id_paciente, id_empresa) VALUES ($1, $2, $3, $4, $5, $6, $7) returning *',
+      [conta.id_pagamento, conta.nr_parcela, conta.valor, conta.dt_vencimento, conta.status, conta.id_paciente, conta.id_empresa]);
   }
 
   async deleteContasReceber(id_pagamento: number) {

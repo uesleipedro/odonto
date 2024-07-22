@@ -4,18 +4,18 @@ import { PacienteController } from '../controllers/pacienteController';
 const pacienteController = new PacienteController();
 const router = Router();
 
-router.get('/', async function (req: Request, res: Response, next) {
+router.get('/:id_empresa', async function (req: Request, res: Response, next) {
     try {
-        const response = await pacienteController.getPacientes();
+        const response = await pacienteController.getPacientes(Number(req.params.id_empresa));
         res.status(200).json(response);
     } catch (e) {
         next(e);
     }
 })
 
-router.get('/:id_paciente', async (req: Request, res: Response, next) => {
+router.get('/one/:id_paciente/:id_empresa', async (req: Request, res: Response, next) => {
     try {
-        const response = await pacienteController.getPacienteById(Number(req.params.id_paciente));
+        const response = await pacienteController.getPacienteById(Number(req.params.id_paciente), Number(req.params.id_empresa));
         res.status(200).json(response);
     } catch (e) {
         next(e);

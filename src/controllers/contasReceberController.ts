@@ -11,9 +11,9 @@ export class ContasReceberController {
   //     return denteData.getDentes();
   //   };
 
-  getContasReceberByPaciente(id_paciente: any) {
+  getContasReceberByPaciente(id_paciente: number, id_empresa: number) {
 
-    return contasReceberData.getContasReceberByPaciente(id_paciente)
+    return contasReceberData.getContasReceberByPaciente(id_paciente, id_empresa)
   }
 
   async saveContaReceber(conta: any) {

@@ -17,7 +17,8 @@ export class EmpresaController {
 
   }
 
-  async saveEmpresa(empresa: Empresa) {
+  async saveEmpresa(empresa: any) {
+    console.log('empresa: ', empresa)
     const existingEmpresa = await empresaData.getEmpresaByCnpjCpf(String(empresa.cnpj_cpf));
     if (existingEmpresa) throw new Error('Já existe uma empresa cadastrada com esse CNPJ/CPF');
 

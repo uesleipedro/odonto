@@ -22,9 +22,9 @@ router.get('/:id_procedimento', async (req: Request, res: Response, next) => {
     }
 });
 
-router.get('/paciente/:id_paciente', async (req: Request, res: Response, next) => {
+router.get('/paciente/:id_paciente/:id_empresa', async (req: Request, res: Response, next) => {
     try {
-        const response = await procedimentoController.getProcedimentoByPaciente(Number(req.params.id_paciente));
+        const response = await procedimentoController.getProcedimentoByPaciente(Number(req.params.id_paciente), Number(req.params.id_empresa));
         res.status(200).json(response);
     } catch (e) {
         next(e);

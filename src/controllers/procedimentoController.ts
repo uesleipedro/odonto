@@ -15,9 +15,9 @@ export class ProcedimentoController {
     return procedimentoData.getProcedimentoById(id_procedimento)
   }
 
-  getProcedimentoByPaciente(id_paciente: any) {
+  getProcedimentoByPaciente(id_paciente: number, id_empresa: number) {
     console.log('entrou controller')
-    return procedimentoData.getProcedimentoByPaciente(id_paciente)
+    return procedimentoData.getProcedimentoByPaciente(id_paciente, id_empresa)
   }
 
   async saveProcedimento(procedimento: any) {

@@ -4,9 +4,9 @@ import { AgendaController } from '../controllers/agendaController'
 const agendaController = new AgendaController()
 const router = Router()
 
-router.get('/', async function (req: Request, res: Response, next) {
+router.get('/:id_empresa', async function (req: Request, res: Response, next) {
     try {
-        const response = await agendaController.getAgenda()
+        const response = await agendaController.getAgenda(Number(req.params.id_empresa))
         res.status(200).json(response)
     } catch (e) {
         next(e)

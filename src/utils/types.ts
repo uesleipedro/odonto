@@ -4,6 +4,8 @@ export interface User{
   nome: string;
   id_empresa: number;
   senha: string;
+  razao_social: string;
+  cnpj_cpf: string;
 }
 
 export interface LoginData{

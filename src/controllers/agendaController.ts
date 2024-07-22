@@ -5,18 +5,16 @@ import { Request, Response, NextFunction } from 'express'
 const agendaData = new AgendaData()
 
 export class AgendaController {
-  getAgenda() {
+  getAgenda(id_empresa: number) {
 
-    return agendaData.getAgenda()
+    return agendaData.getAgenda(id_empresa)
   }
 
   async saveAgenda(agenda: any) {
     let existingAgenda
-    //if (existingAgenda =! null) throw new Error('Já existe uma empresa cadastrada com esse CNPJ/CPF')
     try{
             
        const a = await agendaData.saveAgenda(agenda)
-       console.log(a)
        if(!a) throw new Error("Erro aqui")
 
     }catch(e){
@@ -27,9 +25,6 @@ export class AgendaController {
   };
 
   async updateAgenda(agenda: any) {
-    //let existingAnamnese: any = this.getAnamneseById(anamnese.id_anamnese)
-    //if (existingAnamnese === '[]') throw new Error('Anamnese não encontrada no banco de dados')
-    console.log("agenda", agenda)
     try {
       await agendaData.updateAgenda(agenda)
     } catch (e) {

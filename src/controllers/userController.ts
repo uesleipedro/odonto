@@ -1,10 +1,12 @@
-import { User, LoginData } from '../utils/types';
-import { UserData } from '../data/userData';
-import jwt, { Secret, JwtPayload } from 'jsonwebtoken';
-import { Request, Response, NextFunction } from 'express';
+import { User, LoginData } from '../utils/types'
+import { UserData } from '../data/userData'
+import { EmpresaController } from './empresaController'
+import jwt, { Secret, JwtPayload } from 'jsonwebtoken'
+import { Request, Response, NextFunction } from 'express'
 
-const bcrypt = require('bcryptjs');
-const userData = new UserData();
+const bcrypt = require('bcryptjs')
+const userData = new UserData()
+const empresaController = new EmpresaController()
 
 //sera removido daqui
 export const SECRET_KEY: Secret = 'your-secret-key-here';
@@ -32,7 +34,6 @@ export class UserController {
     const isMatch = bcrypt.compareSync(loginData.senha, foundUser.senha);
     if (!isMatch) throw new Error('Wrong username or password!');
 
-    //const SECRET_KEY = "asdf";
     const token = jwt.sign({ _id: foundUser.id_user?.toString(), nome: foundUser.nome }, SECRET_KEY, {
       expiresIn: '2 days',
     });
@@ -66,13 +67,22 @@ export class UserController {
     }
   };
 
-  async saveUser(user: User) {
-    const existingUser = await userData.getUserByEmail(user.email);
+  async saveUser(user: any) {
+    const existingUser = await userData.getUserByEmail(user.email)
     if (existingUser) throw Error('User already exists')
 
     const saltRound = 8;
-    user.senha = await bcrypt.hash(user.senha, saltRound);
-    return userData.saveUser(user);
+    user.senha = await bcrypt.hash(user.senha, saltRound)
+
+    const cadastroEmpresa = await empresaController.saveEmpresa({razao_social: user.razao_social, cnpj_cpf: user.cnpj_cpf})
+    
+    if(cadastroEmpresa) 
+      user.id_empresa = cadastroEmpresa.id_empresa
+    else
+      throw Error('Erro ao cadastrar empresa')
+
+      
+    return userData.saveUser(user)
   };
 
 

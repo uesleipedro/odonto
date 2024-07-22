@@ -5,13 +5,13 @@ import { Request, Response, NextFunction } from 'express';
 const pacienteData = new PacienteData();
 
 export class PacienteController {
-  getPacientes() {
+  getPacientes(id_empresa: number) {
 
-    return pacienteData.getPacientes();
+    return pacienteData.getPacientes(id_empresa);
   }
 
-  async getPacienteById(id_paciente: number) {
-    const paciente = await pacienteData.getPacienteById(id_paciente);
+  async getPacienteById(id_paciente: number, id_empresa: number) {
+    const paciente = await pacienteData.getPacienteById(id_paciente, id_empresa);
     if (!paciente) throw new Error('User not found');
     return paciente
   }

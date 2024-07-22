@@ -23,6 +23,7 @@ router.get('/:email', async function (req: Request, res: Response, next) {
 });
 
 router.post('/', async function (req: Request, res: Response, next) {
+  console.log("entrou no userRouter")
     try {
        const response = await userController.saveUser(req.body);
        res.status(201).json(response);

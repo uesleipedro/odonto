@@ -1,14 +1,25 @@
 import db from '../infra/database'
-//import { Empresa } from '../utils/types'
 
 export class AgendaData {
-    getAgenda() {
-        // return db.query('SELECT * FROM odonto.agenda')
-        return db.query(`SELECT id_agenda as id, descricao as title, to_char(start, 'YYYY-MM-DD"T"HH24:MI:SS') as start, to_char("end", 'YYYY-MM-DD"T"HH24:MI:SS') as end, id_empresa, id_paciente, id_profissional, obs, descricao, dia_inteiro, status FROM odonto.agenda`)
+    getAgenda(id_empresa: number) {
+        return db.query(`
+          SELECT 
+            id_agenda as id, 
+            descricao as title, 
+            to_char(start, 'YYYY-MM-DD"T"HH24:MI:SS') as start, 
+            to_char("end", 'YYYY-MM-DD"T"HH24:MI:SS') as end, 
+            id_empresa, 
+            id_paciente, 
+            id_profissional, 
+            obs, 
+            descricao, 
+            dia_inteiro, 
+            status 
+          FROM odonto.agenda
+          WHERE id_empresa = ${id_empresa}`)
     }
 
     async saveAgenda(agenda: any) {
-
         return db.one(`INSERT INTO odonto.agenda (id_empresa, id_paciente, id_profissional, start, "end", descricao, obs, dia_inteiro, status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) returning id_agenda`,
             [agenda.id_empresa, agenda.id_paciente, agenda.id_profissional, agenda.start, agenda.end, agenda.descricao, agenda.obs, agenda.dia_inteiro, agenda.status])
     }

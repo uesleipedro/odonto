@@ -13,9 +13,9 @@ router.put('/finalizar', async function (req: Request, res: Response, next) {
     }
 });
 
-router.get('/paciente/:id_paciente', async (req: Request, res: Response, next) => {
+router.get('/paciente/:id_paciente/:id_empresa', async (req: Request, res: Response, next) => {
     try {
-        const response = await contasReceberController.getContasReceberByPaciente(Number(req.params.id_paciente));
+        const response = await contasReceberController.getContasReceberByPaciente(Number(req.params.id_paciente), Number(req.params.id_empresa));
         res.json(response);
     } catch (e) {
         next(e);
