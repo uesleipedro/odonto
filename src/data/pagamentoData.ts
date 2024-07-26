@@ -6,7 +6,7 @@ export class PagamentoData {
     }
 
     getPagamentoByPaciente(id_paciente: any) {
-        return db.query(`SELECT * FROM odonto.pagamento WHERE id_paciente = $1`, [id_paciente])
+        return db.query(`SELECT * FROM odonto.pagamento WHERE id_paciente = $1 order by id_pagamento, nr_parcela`, [id_paciente])
     }
 
     async savePagamento(pagamento: any) {
