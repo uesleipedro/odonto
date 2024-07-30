@@ -9,6 +9,7 @@ export class UserData {
   getUserByEmail(email: string) {
     return db.oneOrNone(`
       SELECT 
+        u.id_user,
 	      u.email,
 	      u.nome,
 	      u.senha,

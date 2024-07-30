@@ -44,7 +44,7 @@ export class ProcedimentoData {
         WHERE
             orcado = false 
             AND id_paciente = $1
-            AND id_empresa = $2`, [id_paciente, id_empresa])
+            AND odonto.procedimento.id_empresa = $2`, [id_paciente, id_empresa])
     }
 
     async saveProcedimento(procedimento: any) {

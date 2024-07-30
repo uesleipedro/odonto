@@ -41,10 +41,10 @@ export class ProcedimentoOrcamentoController {
       }
   
     }
+  */
+    async deleteProcedimentoOrcamentoByOrcamento(id_orcamento: number, id_empresa: number) {
   
-    async deleteProcedimento(id_procedimento: number) {
-  
-      return await procedimentoData.deleteProcedimento(id_procedimento);
+      return await procedimentoOrcamentoData.deleteProcedimentoOrcamentoByOrcamento(id_orcamento, id_empresa);
     }
-    */
+  
 }

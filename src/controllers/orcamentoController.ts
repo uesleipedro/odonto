@@ -15,6 +15,11 @@ export class OrcamentoController {
     return orcamentoData.getOrcamentoByPaciente(id_paciente)
   }
 
+  async getOrcamentoView(id_orcamento: number){
+
+    return orcamentoData.getOrcamentoView(id_orcamento)
+  }
+
   async saveOrcamento(orcamento: any) {
     let existingAgenda
     //if (existingAgenda =! null) throw new Error('Já existe uma empresa cadastrada com esse CNPJ/CPF')

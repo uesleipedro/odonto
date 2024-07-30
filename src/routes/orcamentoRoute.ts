@@ -23,6 +23,15 @@ router.get('/paciente/:id_paciente', async (req: Request, res: Response, next) =
     }
 });
 
+router.get('/view/:id_orcamento', async (req: Request, res: Response, next) => {
+  try {
+    const response = await orcamentoController.getOrcamentoView(Number(req.params.id_orcamento))
+    res.json(response)
+  } catch (e) {
+    next(e)
+  }
+})
+
 router.put('/status', async function (req: Request, res: Response, next) {
     try {
         const response = await orcamentoController.updateStatusOrcamento(req.body)

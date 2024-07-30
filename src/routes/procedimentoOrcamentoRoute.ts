@@ -40,9 +40,9 @@ router.post('/', async function (req: Request, res: Response, next) {
 //     }
 // });
 
-// router.delete('/:id_procedimento', async (req: Request, res: Response) => {
-//     const response = await procedimentoController.deleteProcedimento(Number(req.params.id_procedimento))
-//     res.status(204).json(response)
-// })
+ router.delete('/by_orcamento/:id_orcamento/:id_empresa', async (req: Request, res: Response) => {
+     const response = await procedimentoOrcamentoController.deleteProcedimentoOrcamentoByOrcamento(Number(req.params.id_orcamento), Number(req.params.id_empresa))
+     res.status(204).json(response)
+ })
 
 export default router

@@ -21,8 +21,8 @@ export class ProcedimentoOrcamentoData {
 
     async saveProcedimentoOrcamento(procedimento_orcamento: any) {
 
-        return db.one('INSERT INTO odonto.procedimento_orcamento (id_procedimento, id_orcamento, preco ) VALUES ($1, $2, $3) returning id_orcamento',
-            [procedimento_orcamento.id_procedimento, procedimento_orcamento.id_orcamento, procedimento_orcamento.preco])
+        return db.one('INSERT INTO odonto.procedimento_orcamento (id_procedimento, id_orcamento, preco, id_empresa ) VALUES ($1, $2, $3, $4) returning id_orcamento',
+            [procedimento_orcamento.id_procedimento, procedimento_orcamento.id_orcamento, procedimento_orcamento.preco, procedimento_orcamento.id_empresa])
     }
 
     async updateProcedimento(procedimento: any) {
@@ -30,9 +30,9 @@ export class ProcedimentoOrcamentoData {
             [procedimento.id_procedimento, procedimento.dente, procedimento.face_dente, procedimento.estado, procedimento.observacao, procedimento.id_profissional, procedimento.adicionado, procedimento.preco, procedimento.id_procedimento_list])
     }
 
-    deleteProcedimento(id_procedimento: number) {
+    deleteProcedimentoOrcamentoByOrcamento(id_orcamento: number, id_empresa: number) {
 
-        return db.none('DELETE FROM odonto.procedimento WHERE id_procedimento = $1', [id_procedimento]);
+        return db.none('DELETE FROM odonto.procedimento_orcamento WHERE id_orcamento = $1 AND id_empresa = $2', [id_orcamento, id_empresa]);
     }
 
 }

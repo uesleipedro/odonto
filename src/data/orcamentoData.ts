@@ -18,6 +18,28 @@ export class OrcamentoData {
         return db.query(`SELECT * FROM odonto.orcamento WHERE id_paciente = $1`, [id_paciente])
     }
 
+    async getOrcamentoView(id_orcamento: number) {
+      return db.query(`
+        SELECT 
+		      pl.descricao AS procedimento,
+		      po.id_orcamento,
+		      po.preco AS preco_item,
+		      po.id_empresa,
+		      o.preco AS preco_total,
+		      o.date AS data_orcamento,
+		      o.id_profissional,
+          pa.nome,
+		      o.status
+	      FROM
+		      odonto.procedimento_orcamento po
+	      INNER JOIN odonto.procedimento p ON p.id_procedimento = po.id_procedimento 
+	      INNER JOIN odonto.procedimento_list pl ON pl.id_procedimento = p.id_procedimento_list 
+	      INNER JOIN odonto.orcamento o ON o.id_orcamento = po.id_orcamento
+        INNER JOIN odonto.paciente pa ON pa.id_paciente = o.id_paciente
+	      WHERE po.id_orcamento = $1
+      `, [id_orcamento])
+    }
+
     async saveOrcamento(orcamento: any) {
 
         return db.one('INSERT INTO odonto.orcamento (id_empresa, id_profissional, id_paciente, preco, date, status) VALUES ($1, $2, $3, $4, NOW(), $5) returning id_orcamento',
