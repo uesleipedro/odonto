@@ -26,25 +26,27 @@ export class ProcedimentoData {
     async getProcedimentoByPaciente(id_paciente: number, id_empresa: number) {
         return db.query(`
         SELECT 
-            odonto.procedimento.id_procedimento,
-            dente,
-            estado,
-            observacao,
-            id_profissional,
-            face_dente,
-            adicionado,
-            odonto.procedimento.preco,
-            odonto.procedimento_list.descricao as procedimento,
-            odonto.procedimento_list.id_procedimento as id_procedimento_list,
-            id_paciente,
-            orcado
-        FROM odonto.procedimento
-        INNER JOIN odonto.procedimento_list
-        ON odonto.procedimento.id_procedimento_list = odonto.procedimento_list.id_procedimento 
+            p.id_procedimento,
+            pl.descricao as nome_procedimento,
+            p.dente,
+            p.estado,
+            p.observacao,
+            p.id_profissional,
+            u.nome as nome_profissional,
+            p.face_dente,
+            p.adicionado,
+            p.preco,
+            pl.descricao as procedimento,
+            pl.id_procedimento as id_procedimento_list,
+            p.id_paciente,
+            p.orcado
+        FROM odonto.procedimento p
+        INNER JOIN odonto.procedimento_list pl ON p.id_procedimento_list = pl.id_procedimento 
+        INNER JOIN odonto.user u ON u.id_user = p.id_profissional
         WHERE
-            orcado = false 
-            AND id_paciente = $1
-            AND odonto.procedimento.id_empresa = $2`, [id_paciente, id_empresa])
+            p.orcado = false 
+            AND p.id_paciente = $1
+            AND p.id_empresa = $2`, [id_paciente, id_empresa])
     }
 
     async saveProcedimento(procedimento: any) {

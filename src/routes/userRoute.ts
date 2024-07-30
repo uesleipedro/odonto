@@ -22,6 +22,15 @@ router.get('/:email', async function (req: Request, res: Response, next) {
     }
 });
 
+router.get('/empresa/:id_empresa', async function (req: Request, res: Response, next) {
+    try {
+        const response = await userController.getUserByEmpresa(Number(req.params.id_empresa));
+        res.json(response);
+    } catch (e) {
+        next(e)
+    }
+})
+
 router.post('/', async function (req: Request, res: Response, next) {
   console.log("entrou no userRouter")
     try {

@@ -4,7 +4,11 @@ export class UserData {
   getUsers() {
     const response = db.query('SELECT * FROM odonto.user');
     return response;
-  };
+  }
+
+  async getUserByEmpresa (id_empresa: number) {
+    return db.query('SELECT id_user as value, nome as label FROM odonto.user WHERE id_empresa = $1', [id_empresa])
+  }
 
   getUserByEmail(email: string) {
     return db.oneOrNone(`

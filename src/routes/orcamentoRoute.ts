@@ -23,9 +23,9 @@ router.get('/paciente/:id_paciente', async (req: Request, res: Response, next) =
     }
 });
 
-router.get('/view/:id_orcamento', async (req: Request, res: Response, next) => {
+router.get('/view/:id_orcamento/:id_empresa', async (req: Request, res: Response, next) => {
   try {
-    const response = await orcamentoController.getOrcamentoView(Number(req.params.id_orcamento))
+    const response = await orcamentoController.getOrcamentoView(Number(req.params.id_orcamento), Number(req.params.id_empresa))
     res.json(response)
   } catch (e) {
     next(e)

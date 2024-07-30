@@ -18,7 +18,7 @@ export class OrcamentoData {
         return db.query(`SELECT * FROM odonto.orcamento WHERE id_paciente = $1`, [id_paciente])
     }
 
-    async getOrcamentoView(id_orcamento: number) {
+    async getOrcamentoView(id_orcamento: number, id_empresa: number) {
       return db.query(`
         SELECT 
 		      pl.descricao AS procedimento,
@@ -37,7 +37,8 @@ export class OrcamentoData {
 	      INNER JOIN odonto.orcamento o ON o.id_orcamento = po.id_orcamento
         INNER JOIN odonto.paciente pa ON pa.id_paciente = o.id_paciente
 	      WHERE po.id_orcamento = $1
-      `, [id_orcamento])
+        AND po.id_empresa = $2
+      `, [id_orcamento, id_empresa])
     }
 
     async saveOrcamento(orcamento: any) {

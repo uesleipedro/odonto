@@ -19,7 +19,12 @@ export class UserController {
   getUsers() {
 
     return userData.getUsers();
-  };
+  }
+
+  async getUserByEmpresa(id_empresa: number){
+    
+    return userData.getUserByEmpresa(id_empresa)
+  }
 
   async getUserByEmail(email: string) {
     const user = await userData.getUserByEmail(email);

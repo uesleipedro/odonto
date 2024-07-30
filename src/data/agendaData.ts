@@ -4,19 +4,23 @@ export class AgendaData {
     getAgenda(id_empresa: number) {
         return db.query(`
           SELECT 
-            id_agenda as id, 
-            descricao as title, 
-            to_char(start, 'YYYY-MM-DD"T"HH24:MI:SS') as start, 
-            to_char("end", 'YYYY-MM-DD"T"HH24:MI:SS') as end, 
-            id_empresa, 
-            id_paciente, 
-            id_profissional, 
-            obs, 
-            descricao, 
-            dia_inteiro, 
-            status 
-          FROM odonto.agenda
-          WHERE id_empresa = ${id_empresa}`)
+            a.id_agenda as id, 
+            a.descricao as title, 
+            to_char(a.start, 'YYYY-MM-DD"T"HH24:MI:SS') as start, 
+            to_char(a."end", 'YYYY-MM-DD"T"HH24:MI:SS') as end, 
+            a.id_empresa, 
+            a.id_paciente, 
+            p.nome,
+            a.id_profissional, 
+            u.nome as nome_profissional,
+            a.obs, 
+            a.descricao, 
+            a.dia_inteiro, 
+            a.status 
+          FROM odonto.agenda a
+          INNER JOIN odonto.paciente p ON a.id_paciente = p.id_paciente
+          INNER JOIN odonto.user u ON u.id_user = a.id_profissional
+          WHERE a.id_empresa = ${id_empresa}`)
     }
 
     async saveAgenda(agenda: any) {

@@ -15,9 +15,9 @@ export class OrcamentoController {
     return orcamentoData.getOrcamentoByPaciente(id_paciente)
   }
 
-  async getOrcamentoView(id_orcamento: number){
+  async getOrcamentoView(id_orcamento: number, id_empresa: number){
 
-    return orcamentoData.getOrcamentoView(id_orcamento)
+    return orcamentoData.getOrcamentoView(id_orcamento, id_empresa)
   }
 
   async saveOrcamento(orcamento: any) {
