@@ -31,8 +31,16 @@ router.get('/empresa/:id_empresa', async function (req: Request, res: Response, 
     }
 })
 
+router.get('/empresa2/:id_empresa', async function (req: Request, res: Response, next) {
+    try {
+        const response = await userController.getUserByEmpresa2(Number(req.params.id_empresa));
+        res.json(response);
+    } catch (e) {
+        next(e)
+    }
+})
+
 router.post('/', async function (req: Request, res: Response, next) {
-  console.log("entrou no userRouter")
     try {
        const response = await userController.saveUser(req.body);
        res.status(201).json(response);
@@ -42,12 +50,15 @@ router.post('/', async function (req: Request, res: Response, next) {
 });
 
 router.post('/login', async function (req: Request, res: Response, next) {
-    try {
-        const response = await userController.login(req.body);
-        res.status(201).json(response);
+    /*try {
     } catch (e: any) {
         next(e);
-    }
+    }*/
+  
+  const response = await userController.login(req.body);
+  response.error
+    ? res.status(404).json(response)
+    : res.status(201).json(response)
 });
 
 router.post('/loginOne', async function (req: Request, res: Response, next) {
@@ -57,6 +68,12 @@ router.post('/loginOne', async function (req: Request, res: Response, next) {
     } catch (e: any) {
         next(e);
     }
-});
+})
+
+router.delete('/:id_user/:id_empresa', async (req: Request, res: Response) => {
+    const response = await userController.deleteUser(Number(req.params.id_user), Number(req.params.id_empresa))
+    res.status(204).json(response)
+})
+
 
 export default router;

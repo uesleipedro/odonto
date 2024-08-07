@@ -15,7 +15,19 @@ export class OrcamentoData {
     }
 
     getOrcamentoByPaciente(id_paciente: any) {
-        return db.query(`SELECT * FROM odonto.orcamento WHERE id_paciente = $1`, [id_paciente])
+        return db.query(`
+          SELECT
+            o.id_orcamento,
+            o.id_empresa,
+            o.id_profissional,
+            u.nome as nome_profissional,
+            o.id_paciente,
+            o.preco,
+            o.date,
+            o.status
+          FROM odonto.orcamento o
+            INNER JOIN odonto.user u ON u.id_user = o.id_profissional
+          WHERE o.id_paciente = $1`, [id_paciente])
     }
 
     async getOrcamentoView(id_orcamento: number, id_empresa: number) {

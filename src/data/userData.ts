@@ -1,13 +1,17 @@
-import db from '../infra/database';
+import db from '../infra/database'
 
 export class UserData {
   getUsers() {
-    const response = db.query('SELECT * FROM odonto.user');
-    return response;
+    const response = db.query('SELECT * FROM odonto.user')
+    return response
   }
 
   async getUserByEmpresa (id_empresa: number) {
     return db.query('SELECT id_user as value, nome as label FROM odonto.user WHERE id_empresa = $1', [id_empresa])
+  }
+
+  async getUserByEmpresa2 (id_empresa: number) {
+    return db.query('SELECT * FROM odonto.user WHERE id_empresa = $1', [id_empresa])
   }
 
   getUserByEmail(email: string) {
@@ -28,8 +32,12 @@ export class UserData {
     ) 
   }
 
+  async deleteUser(id_user: number, id_empresa: number) {
+    return db.none('DELETE FROM odonto.user WHERE id_user = $1 AND id_empresa = $2', [id_user, id_empresa]); 
+  }
+
   saveUser(user: any) {
-    return db.one('INSERT INTO odonto.user (email, nome, id_empresa, senha) VALUES ($1, $2, $3, $4) returning *',
-      [user.email, user.nome, user.id_empresa, user.senha]);
-  };
+    return db.one('INSERT INTO odonto.user (email, nome, id_empresa, senha, access_levels) VALUES ($1, $2, $3, $4, $5) returning *',
+      [user.email, user.nome, user.id_empresa, user.senha, user.access_levels])
+  }
 }
