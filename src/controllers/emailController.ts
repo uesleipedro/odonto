@@ -1,42 +1,31 @@
-//import { EmailData } from '../data/emailData'
 import { Request, Response, NextFunction } from 'express'
 import nodemailer from 'nodemailer'
-
-//const emailData = new EmailData()
+import send from '../services/nodemailer'
 
 export class EmailController {
+
   
   async sendEmail(dados: any) {
-    
+    const html = `
+      <hr />
+      <p style="text-align:center">&nbsp;</p>
+      <p style="text-align:center"><span style="font-family:trebuchet ms,helvetica,sans-serif"><span style="color:#cc33cc"><span style="font-size:20px"><strong>ODONTIC</strong></span></span></span></p>
+      <p><span style="font-family:trebuchet ms,helvetica,sans-serif">Ol&aacute;, tudo bem?</span></p>
+      <p><span style="font-family:trebuchet ms,helvetica,sans-serif">Recebemos sua solicita&ccedil;&atilde;o para redefinir a sua senha na ODONTIC!</span></p>
+      <p><span style="font-family:trebuchet ms,helvetica,sans-serif">Utilize o token abaixo para continuar com a recuperação.</span></p>
+      <p><span style="font-size:20px"><strong>${dados?.token}</strong></span></p>
+      <p><span style="font-family:trebuchet ms,helvetica,sans-serif">Caso tenha alguma d&uacute;vida, entre em contato com nosso atendimento.</span></p>
+      <p>&nbsp;</p>
+      <p><span style="font-family:trebuchet ms,helvetica,sans-serif">Estes s&atilde;o os nossos canais oficiais:</span></p>
+      <p><span style="font-family:trebuchet ms,helvetica,sans-serif">WhatsApp:&nbsp;(61) 9 9999-9999&nbsp;-&nbsp;<em>N&atilde;o recebe liga&ccedil;&otilde;es</em><br />
+      E-mail:&nbsp;atendimento@odontic.com.br</span></p>
 
-// Configuração do transportador (transporter)
-const transporter = nodemailer.createTransport({
-  service: 'gmail', // Use o serviço de email desejado, por exemplo, 'gmail'
-  auth: {
-    user: 'ueslei.pedro.rangel@gmail.com', // Seu email
-    pass: '3M3nW@lk0nTh3m00n', // Sua senha ou um App Password gerado (recomendado para Gmail)
-  },
-});
+      <hr />`
+    const { to, subject, body } = dados
+  
+    send(to, subject, html)
 
-// Opções do email
-const mailOptions = {
-  from: 'ueslei.pedro.rangel@gmail.com', // Email de origem
-  to: 'ielseu@hotmail.com', // Email de destino
-  subject: 'Email Teste',
-  text: 'Teste de envio de email',
-  // html: '<p>Corpo do email em <strong>HTML</strong></p>', // Opcional: Corpo do email em HTML
-};
-
-// Enviar o email
-transporter.sendMail(mailOptions, (error: any, info: any) => {
-  if (error) {
-    console.log('Erro ao enviar o email:', error);
-  } else {
-    console.log('Email enviado:', info.response);
-  }
-
-  return info.response
-})
+    return "Email enviado com sucesso"
   }
 
 

@@ -3,10 +3,13 @@ import { UserData } from '../data/userData'
 import { EmpresaController } from './empresaController'
 import jwt, { Secret, JwtPayload } from 'jsonwebtoken'
 import { Request, Response, NextFunction } from 'express'
+import { EmailController } from './emailController'
+import crypto from 'crypto'
 
 const bcrypt = require('bcryptjs')
 const userData = new UserData()
 const empresaController = new EmpresaController()
+const emailController = new EmailController()
 
 export const SECRET_KEY: Secret = 'your-secret-key-here';
 
@@ -31,9 +34,9 @@ export class UserController {
   }
  
   async getUserByEmail(email: string) {
-    const user = await userData.getUserByEmail(email);
-    if (!user) throw new Error('User not found');
-    return user;
+    const user = await userData.getUserByEmail(email)
+    if (!user) throw new Error('User not found')
+    return user
   };
 
   async login(loginData: LoginData) {
@@ -78,17 +81,64 @@ export class UserController {
     }
   }
 
+  async updatePassword(req: Request, res: Response){
+    try {
+      return await userData.updatePassword(
+        req.body.email, 
+        await this.encryptPassword(req.body.senha)
+      )
+    } catch (error) {
+      return error
+    }
+  }
+
+  async recuperarSenha(req: Request, res: Response) {
+    const foundUser = await userData.getUserByEmail(req.body.email)
+    
+    !foundUser && res.status(404).send("Usuário não encontrado!")
+    
+    const token = await crypto.randomBytes(5).toString('hex')
+    console.log('token', token)
+    try {
+      const addedToken = await userData.addTokenResetPassword(req.body.email, token)
+      if(addedToken){
+        await emailController.sendEmail({
+          	to: req.body.email,
+	          subject: "Recuperação de senha",
+            token
+        })
+          res.status(200).send({message: "Token incluído com sucesso"})
+      }else{
+        res.status(401).send({message: "Erro ao tentar resetar a senha!"})
+      }
+    } catch (error) {
+      return res.status(500).send(error);
+    } 
+  }
+
+  async checkToken(req: Request, res: Response) {
+    const foundUser = await userData.getUserByEmail(req.body.email)
+
+    foundUser?.token_to_reset_password === req.body.token
+      ? res.status(200).send({message: "Tokens match"})
+      : res.status(401).send({messagem: "Tokens do not match"})
+  }
+
   async deleteUser(id_user: number, id_empresa: number) {
 
     return await userData.deleteUser(id_user, id_empresa);
+  }
+
+  async encryptPassword(password: string){
+    const saltRound = 8
+    return await bcrypt.hash(password, saltRound)
   }
 
   async saveUser(user: any) {
     const existingUser = await userData.getUserByEmail(user.email)
     if (existingUser) throw new Error(JSON.stringify({ status: 400, error: 'Email already exists' }))
     
-    const saltRound = 8;
-    user.senha = await bcrypt.hash(user.senha, saltRound)
+    user.senha = await this.encryptPassword(user.senha) 
     const cadastroEmpresa = user.id_empresa 
       ? {id_empresa: user.id_empresa}
       : await empresaController.saveEmpresa({razao_social: user.razao_social, cnpj_cpf: user.cnpj_cpf})

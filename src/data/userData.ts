@@ -9,7 +9,6 @@ export class UserData {
   async getUserByEmpresa (id_empresa: number) {
     return db.query('SELECT id_user as value, nome as label FROM odonto.user WHERE id_empresa = $1', [id_empresa])
   }
-
   async getUserByEmpresa2 (id_empresa: number) {
     return db.query('SELECT * FROM odonto.user WHERE id_empresa = $1', [id_empresa])
   }
@@ -22,6 +21,7 @@ export class UserData {
 	      u.nome,
 	      u.senha,
 	      u.id_empresa,
+        u.token_to_reset_password,
 	      e.razao_social,
 	      e.nome_fantasia,
 	      e.cnpj_cpf
@@ -30,6 +30,16 @@ export class UserData {
       ON u.id_empresa = e.id_empresa
       WHERE email= $1`, [email]
     ) 
+  }
+
+  async addTokenResetPassword(email: string, token: string){
+    return await db.oneOrNone(`UPDATE odonto.user SET token_to_reset_password = $2 WHERE email = $1 RETURNING *`,
+      [email, token])
+  }
+
+  async updatePassword(email: string, senha: string){
+    return db.none(`UPDATE odonto.user SET senha = $2 WHERE email =$1`,
+      [email, senha])
   }
 
   async deleteUser(id_user: number, id_empresa: number) {

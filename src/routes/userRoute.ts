@@ -40,6 +40,15 @@ router.get('/empresa2/:id_empresa', async function (req: Request, res: Response,
     }
 })
 
+router.post('/checkToken', async function (req: Request, res: Response, next) {
+    try {
+        const response = await userController.checkToken(req, res)
+        res.json(response)
+    } catch (e) {
+        next(e)
+    }
+})
+
 router.post('/', async function (req: Request, res: Response, next) {
     try {
        const response = await userController.saveUser(req.body);
@@ -64,6 +73,24 @@ router.post('/login', async function (req: Request, res: Response, next) {
 router.post('/loginOne', async function (req: Request, res: Response, next) {
     try {
        const response = await userController.loginOne(req, res);
+       res.status(201).json(response);
+    } catch (e: any) {
+        next(e);
+    }
+})
+
+router.post('/recuperarSenha', async function (req: Request, res: Response, next) {
+    try {
+       const response = await userController.recuperarSenha(req, res);
+       res.status(201).json(response);
+    } catch (e: any) {
+        next(e);
+    }
+})
+
+router.put('/redefinirSenha', async function (req: Request, res: Response, next) {
+    try {
+       const response = await userController.updatePassword(req, res);
        res.status(201).json(response);
     } catch (e: any) {
         next(e);
