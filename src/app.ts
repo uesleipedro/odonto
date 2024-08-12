@@ -15,6 +15,7 @@ import procedimentoOrcamentoRoute from "./routes/procedimentoOrcamentoRoute"
 import contasReceberRoute from "./routes/contasReceberRoute"
 import emailRoute from "./routes/emailRoute"
 import accessLevelRoute from "./routes/accessLevelRoute"
+import wppSession from "./routes/wppSessionRoute"
 import cors from 'cors'
 
 export const app = express()
@@ -43,3 +44,4 @@ app.use("/procedimento_orcamento", procedimentoOrcamentoRoute)
 app.use("/contas_receber", contasReceberRoute)
 app.use("/sendEmail", emailRoute)
 app.use("/access_level", accessLevelRoute)
+app.use("/wpp-session", wppSession)

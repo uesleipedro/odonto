@@ -41,6 +41,11 @@ export class OrcamentoData {
 		      o.date AS data_orcamento,
 		      o.id_profissional,
           pa.nome,
+          pa.cpf,
+          pa.telefone_movel,
+          o.date,
+          e.nome_fantasia,
+          e.cnpj_cpf,
 		      o.status
 	      FROM
 		      odonto.procedimento_orcamento po
@@ -48,6 +53,7 @@ export class OrcamentoData {
 	      INNER JOIN odonto.procedimento_list pl ON pl.id_procedimento = p.id_procedimento_list 
 	      INNER JOIN odonto.orcamento o ON o.id_orcamento = po.id_orcamento
         INNER JOIN odonto.paciente pa ON pa.id_paciente = o.id_paciente
+        INNER JOIN odonto.empresa e ON e.id_empresa = o.id_empresa
 	      WHERE po.id_orcamento = $1
         AND po.id_empresa = $2
       `, [id_orcamento, id_empresa])
