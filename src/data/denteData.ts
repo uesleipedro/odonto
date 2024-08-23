@@ -6,6 +6,9 @@ export class DenteData {
     return db.query('SELECT distinct dente as value, dente as label FROM odonto.faces_dente order by dente')
   }
 
+  getDentesComProcedimento(dados: any) {
+    return db.query('select array_agg(DISTINCT dente) AS dentes FROM odonto.procedimento WHERE id_paciente = $1 AND id_empresa = $2', [dados.id_paciente, dados.id_empresa])
+  }
   // getPacienteById(id_paciente: number) {
 
   //   return db.oneOrNone('SELECT * FROM odonto.paciente WHERE id_paciente = $1', [id_paciente])

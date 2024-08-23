@@ -24,7 +24,8 @@ export class UserData {
         u.token_to_reset_password,
 	      e.razao_social,
 	      e.nome_fantasia,
-	      e.cnpj_cpf
+	      e.cnpj_cpf,
+        u.access_levels
       FROM odonto.user u
       INNER JOIN odonto.empresa e
       ON u.id_empresa = e.id_empresa

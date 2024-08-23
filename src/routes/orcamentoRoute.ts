@@ -14,12 +14,12 @@ router.get('/', async function (req: Request, res: Response, next) {
     }
 });
 
-router.get('/paciente/:id_paciente', async (req: Request, res: Response, next) => {
+router.get('/paciente', async (req: Request, res: Response, next) => {
     try {
-        const response = await orcamentoController.getOrcamentoByPacienet(Number(req.params.id_paciente));
-        res.json(response);
+        const response = await orcamentoController.getOrcamentoByPacienet(req.query)
+        res.json(response)
     } catch (e) {
-        next(e);
+        next(e)
     }
 });
 

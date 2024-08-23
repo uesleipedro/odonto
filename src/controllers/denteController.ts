@@ -7,8 +7,13 @@ const denteData = new DenteData();
 export class DenteController {
   getDentes() {
 
-    return denteData.getDentes();
-  };
+    return denteData.getDentes()
+  }
+
+  getDentesComProcedimento(dados: any){
+
+    return denteData.getDentesComProcedimento(dados)
+  }
 
   // async getPacienteById(id_paciente: number) {
   //   const paciente = await pacienteData.getPacienteById(id_paciente);

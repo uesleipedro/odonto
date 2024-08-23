@@ -13,6 +13,15 @@ router.get('/', async function (req: Request, res: Response, next) {
     }
 })
 
+router.get('/dentesComProcedimento', async function (req: Request, res: Response, next) {
+    try {
+        const response = await denteController.getDentesComProcedimento(req.query)
+        res.status(200).json(response)
+    } catch (e) {
+        next(e)
+    }
+})
+
 // router.post('/', async function (req: Request, res: Response, next) {
 //     try {
 //        const response = await pacienteController.savePaciente(req.body)

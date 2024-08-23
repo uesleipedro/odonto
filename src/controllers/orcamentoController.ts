@@ -10,9 +10,9 @@ export class OrcamentoController {
     return orcamentoData.getOrcamento()
   }
 
-  getOrcamentoByPacienet(id_paciente: any) {
+  getOrcamentoByPacienet(paciente: any) {
 
-    return orcamentoData.getOrcamentoByPaciente(id_paciente)
+    return orcamentoData.getOrcamentoByPaciente(paciente)
   }
 
   async getOrcamentoView(id_orcamento: number, id_empresa: number){

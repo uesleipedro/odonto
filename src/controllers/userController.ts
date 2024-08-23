@@ -4,12 +4,14 @@ import { EmpresaController } from './empresaController'
 import jwt, { Secret, JwtPayload } from 'jsonwebtoken'
 import { Request, Response, NextFunction } from 'express'
 import { EmailController } from './emailController'
+import {AccessLevelScreenController} from './accessLevelScreenController'
 import crypto from 'crypto'
 
 const bcrypt = require('bcryptjs')
 const userData = new UserData()
 const empresaController = new EmpresaController()
 const emailController = new EmailController()
+const accessLevelScreenController = new AccessLevelScreenController()
 
 export const SECRET_KEY: Secret = 'your-secret-key-here';
 
@@ -41,10 +43,15 @@ export class UserController {
 
   async login(loginData: LoginData) {
     const foundUser = await userData.getUserByEmail(loginData.email);
-    //if (!foundUser) throw new Error('Wrong username or password!');
 
     const isMatch = bcrypt.compareSync(loginData.senha, foundUser.senha);
-    //if (!isMatch) throw new Error('Wrong username or password!');
+
+    const access_level = 
+      await accessLevelScreenController.getAccessLevelScreen(
+        {
+          id_empresa: foundUser.id_empresa, 
+          id_access_levels: foundUser.access_levels
+        })
 
     const token = jwt.sign({ _id: foundUser.id_user?.toString(), nome: foundUser.nome }, SECRET_KEY, {
       expiresIn: '2 days',
@@ -52,7 +59,7 @@ export class UserController {
 
     return !foundUser || !isMatch
       ? {error: "Usuário ou senha incorretos!"}
-      : { user: { foundUser }, token: token, expiratedAt: '' };
+      : { user: { foundUser }, token: token, expiratedAt: '', access_level};
   }
 
   async auth(req: Request, res: Response, next: NextFunction) {

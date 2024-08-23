@@ -2,7 +2,7 @@ import db from '../infra/database'
 
 export class AccessLevelData {
   getAccessLevels(id_empresa: number) {
-    const response = db.query('SELECT * FROM odonto.access_levels WHERE id_empresa = $1', [id_empresa])
+    const response = db.query('SELECT * FROM odonto.access_levels WHERE id_empresa = $1 ORDER BY level_name ASC', [id_empresa])
     return response
   }
 

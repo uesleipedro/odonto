@@ -44,8 +44,8 @@ export class AgendaController {
 
   }
 
-  async deleteAgenda(id_agenda: number) {
+  async deleteAgenda(agenda: any) {
 
-    return await agendaData.deleteAgenda(id_agenda);
+    return await agendaData.deleteAgenda(agenda)
   }
 }

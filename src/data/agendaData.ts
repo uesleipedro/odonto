@@ -38,7 +38,7 @@ export class AgendaData {
       [agenda.id_agenda, agenda.start, agenda.end])
   }
 
-  async deleteAgenda(id_agenda: number) {
-    return db.none('DELETE FROM odonto.agenda WHERE id_agenda = $1', [id_agenda]); 
+  async deleteAgenda(agenda: any) {
+    return db.none('DELETE FROM odonto.agenda WHERE id_agenda = $1 AND id_empresa = $2', [Number(agenda.id_agenda), Number(agenda.id_empresa)]); 
   }
 }
