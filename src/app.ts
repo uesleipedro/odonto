@@ -18,6 +18,7 @@ import accessLevelRoute from "./routes/accessLevelRoute"
 import wppSession from "./routes/wppSessionRoute"
 import screenRoute from "./routes/screenRoute"
 import accessLevelScreenRoute from "./routes/accessLevelScreenRoute"
+import evolucaoRoute from "./routes/evolucaoRoute"
 import cors from 'cors'
 
 export const app = express()
@@ -49,3 +50,4 @@ app.use("/access_level", accessLevelRoute)
 app.use("/access_level_screen", accessLevelScreenRoute)
 app.use("/wpp-session", wppSession)
 app.use("/screens", screenRoute)
+app.use("/evolucao", evolucaoRoute)
