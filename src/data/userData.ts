@@ -6,10 +6,10 @@ export class UserData {
     return response
   }
 
-  async getUserByEmpresa (id_empresa: number) {
+  async getUserByEmpresa(id_empresa: number) {
     return db.query('SELECT id_user as value, nome as label FROM odonto.user WHERE id_empresa = $1', [id_empresa])
   }
-  async getUserByEmpresa2 (id_empresa: number) {
+  async getUserByEmpresa2(id_empresa: number) {
     return db.query('SELECT * FROM odonto.user WHERE id_empresa = $1', [id_empresa])
   }
 
@@ -25,26 +25,27 @@ export class UserData {
 	      e.razao_social,
 	      e.nome_fantasia,
 	      e.cnpj_cpf,
-        u.access_levels
+        u.access_levels,
+        u.schedule_color
       FROM odonto.user u
       INNER JOIN odonto.empresa e
       ON u.id_empresa = e.id_empresa
       WHERE email= $1`, [email]
-    ) 
+    )
   }
 
-  async addTokenResetPassword(email: string, token: string){
+  async addTokenResetPassword(email: string, token: string) {
     return await db.oneOrNone(`UPDATE odonto.user SET token_to_reset_password = $2 WHERE email = $1 RETURNING *`,
       [email, token])
   }
 
-  async updatePassword(email: string, senha: string){
+  async updatePassword(email: string, senha: string) {
     return db.none(`UPDATE odonto.user SET senha = $2 WHERE email =$1`,
       [email, senha])
   }
 
   async deleteUser(id_user: number, id_empresa: number) {
-    return db.none('DELETE FROM odonto.user WHERE id_user = $1 AND id_empresa = $2', [id_user, id_empresa]); 
+    return db.none('DELETE FROM odonto.user WHERE id_user = $1 AND id_empresa = $2', [id_user, id_empresa]);
   }
 
   saveUser(user: any) {

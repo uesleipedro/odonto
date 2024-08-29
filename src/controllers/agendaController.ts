@@ -7,19 +7,19 @@ const agendaData = new AgendaData()
 export class AgendaController {
   getAgenda(id_empresa: number) {
 
-    return agendaData.getAgenda(id_empresa)
+    return agendaData.getAgendaTeste(id_empresa)
   }
 
   async saveAgenda(agenda: any) {
     let existingAgenda
-    try{
-            
-       const a = await agendaData.saveAgenda(agenda)
-       if(!a) throw new Error("Erro aqui")
+    try {
 
-    }catch(e){
-        //throw new Error ()
-        console.error(e)
+      const a = await agendaData.saveAgenda(agenda)
+      if (!a) throw new Error("Erro aqui")
+
+    } catch (e) {
+      //throw new Error ()
+      console.error(e)
     }
 
   };

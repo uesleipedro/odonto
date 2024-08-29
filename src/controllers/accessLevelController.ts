@@ -1,6 +1,4 @@
-import { User, LoginData } from '../utils/types'
 import { AccessLevelData } from '../data/accessLevelData'
-import { Request, Response, NextFunction } from 'express'
 
 const accessLevelData = new AccessLevelData()
 
@@ -25,8 +23,8 @@ export class AccessLevelController {
       throw Error('Erro ao cadastrar empresa')
 
       */
-    
-    return accessLevelData.saveAccessLevel(access_level) 
+
+    return accessLevelData.saveAccessLevel(access_level)
   };
 
 

@@ -1,5 +1,4 @@
 import { EvolucaoData } from '../data/evolucaoData'
-import { Request, Response, NextFunction } from 'express'
 
 const evolucaoData = new EvolucaoData()
 
@@ -10,9 +9,17 @@ export class EvolucaoController {
   }
 
   async saveEvolucao(evolucao: any) {
-   
-    return evolucaoData.saveEvolucao(evolucao) 
-  };
 
+    return evolucaoData.saveEvolucao(evolucao)
+  }
 
+  async updateEvolucao(evolucao: any) {
+    try {
+      await evolucaoData.updateEvolucao(evolucao)
+    } catch (e) {
+      console.error(e)
+      throw new Error()
+    }
+
+  }
 } 
