@@ -25,6 +25,8 @@ export class UserData {
 	      e.razao_social,
 	      e.nome_fantasia,
 	      e.cnpj_cpf,
+        e.endereco,
+        e.cep,
         u.access_levels,
         u.schedule_color
       FROM odonto.user u
@@ -32,6 +34,11 @@ export class UserData {
       ON u.id_empresa = e.id_empresa
       WHERE email= $1`, [email]
     )
+  }
+
+  async updateUser(user: any) {
+    let a = await db.none(`UPDATE odonto.user SET email = $1, nome = $2, senha = $3, access_levels = $4, schedule_color = $5  WHERE id_user =$7 AND id_empresa = $6`,
+      [user.email, user.nome, user.senha, Number(user.access_levels), user.schedule_color, Number(user.id_empresa), Number(user.id_user)])
   }
 
   async addTokenResetPassword(email: string, token: string) {

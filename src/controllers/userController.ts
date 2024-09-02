@@ -4,7 +4,7 @@ import { EmpresaController } from './empresaController'
 import jwt, { Secret, JwtPayload } from 'jsonwebtoken'
 import { Request, Response, NextFunction } from 'express'
 import { EmailController } from './emailController'
-import {AccessLevelScreenController} from './accessLevelScreenController'
+import { AccessLevelScreenController } from './accessLevelScreenController'
 import crypto from 'crypto'
 
 const bcrypt = require('bcryptjs')
@@ -25,16 +25,16 @@ export class UserController {
     return userData.getUsers();
   }
 
-  async getUserByEmpresa(id_empresa: number){
-    
+  async getUserByEmpresa(id_empresa: number) {
+
     return userData.getUserByEmpresa(id_empresa)
   }
 
-  async getUserByEmpresa2(id_empresa: number){
-    
+  async getUserByEmpresa2(id_empresa: number) {
+
     return userData.getUserByEmpresa2(id_empresa)
   }
- 
+
   async getUserByEmail(email: string) {
     const user = await userData.getUserByEmail(email)
     if (!user) throw new Error('User not found')
@@ -46,10 +46,10 @@ export class UserController {
 
     const isMatch = bcrypt.compareSync(loginData.senha, foundUser.senha);
 
-    const access_level = 
+    const access_level =
       await accessLevelScreenController.getAccessLevelScreen(
         {
-          id_empresa: foundUser.id_empresa, 
+          id_empresa: foundUser.id_empresa,
           id_access_levels: foundUser.access_levels
         })
 
@@ -58,8 +58,8 @@ export class UserController {
     });
 
     return !foundUser || !isMatch
-      ? {error: "Usuário ou senha incorretos!"}
-      : { user: { foundUser }, token: token, expiratedAt: '', access_level};
+      ? { error: "Usuário ou senha incorretos!" }
+      : { user: { foundUser }, token: token, expiratedAt: '', access_level };
   }
 
   async auth(req: Request, res: Response, next: NextFunction) {
@@ -88,10 +88,19 @@ export class UserController {
     }
   }
 
-  async updatePassword(req: Request, res: Response){
+  async updateUser(user: any) {
+    try {
+      user.senha = await this.encryptPassword(user.senha)
+      return userData.updateUser(user)
+    } catch (error) {
+      return error
+    }
+  }
+
+  async updatePassword(req: Request, res: Response) {
     try {
       return await userData.updatePassword(
-        req.body.email, 
+        req.body.email,
         await this.encryptPassword(req.body.senha)
       )
     } catch (error) {
@@ -101,34 +110,34 @@ export class UserController {
 
   async recuperarSenha(req: Request, res: Response) {
     const foundUser = await userData.getUserByEmail(req.body.email)
-    
+
     !foundUser && res.status(404).send("Usuário não encontrado!")
-    
+
     const token = await crypto.randomBytes(5).toString('hex')
     console.log('token', token)
     try {
       const addedToken = await userData.addTokenResetPassword(req.body.email, token)
-      if(addedToken){
+      if (addedToken) {
         await emailController.sendEmail({
-          	to: req.body.email,
-	          subject: "Recuperação de senha",
-            token
+          to: req.body.email,
+          subject: "Recuperação de senha",
+          token
         })
-          res.status(200).send({message: "Token incluído com sucesso"})
-      }else{
-        res.status(401).send({message: "Erro ao tentar resetar a senha!"})
+        res.status(200).send({ message: "Token incluído com sucesso" })
+      } else {
+        res.status(401).send({ message: "Erro ao tentar resetar a senha!" })
       }
     } catch (error) {
       return res.status(500).send(error);
-    } 
+    }
   }
 
   async checkToken(req: Request, res: Response) {
     const foundUser = await userData.getUserByEmail(req.body.email)
 
     foundUser?.token_to_reset_password === req.body.token
-      ? res.status(200).send({message: "Tokens match"})
-      : res.status(401).send({messagem: "Tokens do not match"})
+      ? res.status(200).send({ message: "Tokens match" })
+      : res.status(401).send({ messagem: "Tokens do not match" })
   }
 
   async deleteUser(id_user: number, id_empresa: number) {
@@ -136,7 +145,7 @@ export class UserController {
     return await userData.deleteUser(id_user, id_empresa);
   }
 
-  async encryptPassword(password: string){
+  async encryptPassword(password: string) {
     const saltRound = 8
     return await bcrypt.hash(password, saltRound)
   }
@@ -144,18 +153,18 @@ export class UserController {
   async saveUser(user: any) {
     const existingUser = await userData.getUserByEmail(user.email)
     if (existingUser) throw new Error(JSON.stringify({ status: 400, error: 'Email already exists' }))
-    
-    user.senha = await this.encryptPassword(user.senha) 
-    const cadastroEmpresa = user.id_empresa 
-      ? {id_empresa: user.id_empresa}
-      : await empresaController.saveEmpresa({razao_social: user.razao_social, cnpj_cpf: user.cnpj_cpf})
-    
-    if(cadastroEmpresa) 
+
+    user.senha = await this.encryptPassword(user.senha)
+    const cadastroEmpresa = user.id_empresa
+      ? { id_empresa: user.id_empresa }
+      : await empresaController.saveEmpresa({ razao_social: user.razao_social, cnpj_cpf: user.cnpj_cpf })
+
+    if (cadastroEmpresa)
       user.id_empresa = cadastroEmpresa.id_empresa
     else
       throw Error('Erro ao cadastrar empresa')
 
-      
+
     return userData.saveUser(user)
   };
 
