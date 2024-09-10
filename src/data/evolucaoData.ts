@@ -27,4 +27,9 @@ export class EvolucaoData {
     return db.one('INSERT INTO odonto.evolucoes (id_paciente, texto, id_profissional, id_empresa, updated_at) VALUES ($1, $2, $3, $4, NOW()) returning *',
       [evolucao.id_paciente, evolucao.texto, evolucao.id_profissional, evolucao.id_empresa])
   }
+
+  async deleteEvolucao(evolucao: any) {
+    return db.none('DELETE FROM odonto.evolucoes WHERE id_evolucao = $1 AND id_empresa = $2', [Number(evolucao.id_evolucao), Number(evolucao.id_empresa)])
+  }
+
 }

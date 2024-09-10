@@ -22,4 +22,11 @@ export class EvolucaoController {
     }
 
   }
+
+  async deleteEvolucao(evolucao: any) {
+
+    return await evolucaoData.deleteEvolucao(evolucao)
+  }
+
+
 } 

@@ -32,4 +32,9 @@ router.put('/', async function(req: Request, res: Response, next) {
   }
 })
 
+router.delete('/', async (req: Request, res: Response) => {
+  const response = await evolucaoController.deleteEvolucao(req.query)
+  res.status(204).json(response)
+})
+
 export default router

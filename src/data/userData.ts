@@ -25,8 +25,11 @@ export class UserData {
 	      e.razao_social,
 	      e.nome_fantasia,
 	      e.cnpj_cpf,
-        e.endereco,
         e.cep,
+        e.logradouro,
+        e.bairro,
+        e.cidade,
+        e.uf,
         u.access_levels,
         u.schedule_color
       FROM odonto.user u

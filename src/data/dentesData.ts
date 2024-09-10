@@ -14,7 +14,7 @@ export class DentesData {
       FROM 
         odonto.dentes d
       LEFT JOIN 
-        odonto.procedimento p ON d.numero_dente = CAST(p.dente as integer) 
+        odonto.procedimento p ON d.numero_dente = p.dente
         AND p.id_empresa = $1
         AND p.id_paciente = $2
     `, [dados.id_empresa, dados.id_paciente])

@@ -114,7 +114,6 @@ export class UserController {
     !foundUser && res.status(404).send("Usuário não encontrado!")
 
     const token = await crypto.randomBytes(5).toString('hex')
-    console.log('token', token)
     try {
       const addedToken = await userData.addTokenResetPassword(req.body.email, token)
       if (addedToken) {
@@ -157,7 +156,7 @@ export class UserController {
     user.senha = await this.encryptPassword(user.senha)
     const cadastroEmpresa = user.id_empresa
       ? { id_empresa: user.id_empresa }
-      : await empresaController.saveEmpresa({ razao_social: user.razao_social, cnpj_cpf: user.cnpj_cpf })
+      : await empresaController.saveEmpresa(user)
 
     if (cadastroEmpresa)
       user.id_empresa = cadastroEmpresa.id_empresa

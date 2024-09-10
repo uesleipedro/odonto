@@ -89,7 +89,6 @@ router.post('/recuperarSenha', async function(req: Request, res: Response, next)
 })
 
 router.put('/', async function(req: Request, res: Response) {
-  console.log('user ROute', req.query)
   try {
     const response = await userController.updateUser(req.query)
     res.status(201).json(response)
