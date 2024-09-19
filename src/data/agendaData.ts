@@ -26,7 +26,12 @@ export class AgendaData {
   async getAgendaTeste(id_empresa: number) {
     return db.query(`
       SELECT
-        u.schedule_color as color,
+        '#' || 
+          lpad(to_hex((random() * 255)::int), 2, '0') || 
+          lpad(to_hex((random() * 255)::int), 2, '0') || 
+          lpad(to_hex((random() * 255)::int), 2, '0') AS color,
+        a.id_profissional,
+        u.nome as nome_profissional,
         json_agg(
           json_build_object(
             'id',a.id_agenda, 
@@ -47,7 +52,7 @@ export class AgendaData {
           INNER JOIN odonto.paciente p ON a.id_paciente = p.id_paciente
           INNER JOIN odonto.user u ON u.id_user = a.id_profissional
           WHERE a.id_empresa = ${id_empresa}
-        GROUP BY a.id_profissional, u.schedule_color`)
+        GROUP BY a.id_profissional, u.schedule_color, u.nome`)
 
 
   }
