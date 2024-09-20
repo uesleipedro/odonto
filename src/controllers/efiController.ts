@@ -9,7 +9,6 @@ export class EfiController {
 
   async genEfiPay(id_empresa: number) {
     const credentialData = await efiCredentialController.getEfiCredential(id_empresa)
-    console.log("CredentialData", credentialData)
     return new EfiPay({
       client_id: credentialData[0].client_id,
       client_secret: credentialData[0].client_secret,
@@ -35,8 +34,8 @@ export class EfiController {
       })
 
   }
-  async listaBoletos() {
-    const efipay = await this.genEfiPay(13)
+  async listaBoletos(id_empresa: number) {
+    const efipay = await this.genEfiPay(id_empresa)
 
     try {
       const params: {
@@ -51,10 +50,15 @@ export class EfiController {
       }
 
       const response = await efipay.listCharges(params)
-      console.log('Boletos encontrados:', response);
       return response
     } catch (error: any) {
       console.error('Erro ao consultar boletos:', error.response ? error.response.data : error.message);
     }
+  }
+
+  async cancelaBoleto(dados: any) {
+    const efipay = await this.genEfiPay(Number(dados.id_empresa))
+    const response = await efipay.cancelCharge({ id: Number(dados.id) })
+    return response
   }
 }
