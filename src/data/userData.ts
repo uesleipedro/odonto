@@ -31,11 +31,14 @@ export class UserData {
         e.cidade,
         e.uf,
         u.access_levels,
-        u.schedule_color
+        al.acessa_todas_agendas
       FROM odonto.user u
       INNER JOIN odonto.empresa e
-      ON u.id_empresa = e.id_empresa
-      WHERE email= $1`, [email]
+        ON u.id_empresa = e.id_empresa
+      INNER JOIN odonto.access_levels al 
+        ON al.access_level_id = u.access_levels
+      WHERE email= $1
+      `, [email]
     )
   }
 

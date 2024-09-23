@@ -51,10 +51,10 @@ router.post('/checkToken', async function(req: Request, res: Response, next) {
 
 router.post('/', async function(req: Request, res: Response, next) {
   try {
-    const response = await userController.saveUser(req.body);
-    res.status(201).json(response);
+    const response = await userController.saveUser(req.body)
+    res.status(201).json(response)
   } catch (e: any) {
-    res.status(400).json({ message: e.message })
+    res.status(400).json(JSON.parse(e.message))
   }
 });
 

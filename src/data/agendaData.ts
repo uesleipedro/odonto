@@ -26,10 +26,6 @@ export class AgendaData {
   async getAgendaTeste(id_empresa: number) {
     return db.query(`
       SELECT
-        '#' || 
-          lpad(to_hex((random() * 255)::int), 2, '0') || 
-          lpad(to_hex((random() * 255)::int), 2, '0') || 
-          lpad(to_hex((random() * 255)::int), 2, '0') AS color,
         a.id_profissional,
         u.nome as nome_profissional,
         json_agg(

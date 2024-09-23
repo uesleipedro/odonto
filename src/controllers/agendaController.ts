@@ -1,13 +1,45 @@
-import { Empresa } from '../utils/types'
 import { AgendaData } from '../data/agendaData'
-import { Request, Response, NextFunction } from 'express'
 
 const agendaData = new AgendaData()
+const cores = [
+  "#3357FF",  // Azul
+  "#33FF9E",  // Verde Claro
+  "#FF5733",  // Vermelho
+  "#F0FF33",  // Amarelo
+  "#9933FF",  // Roxo
+  "#FF33E6",  // Rosa
+  "#33FFF0",  // Ciano
+  "#FFA533",  // Laranja
+  "#33FF57",  // Verde
+  "#FF3333",  // Vermelho Escuro
+  "#33FFB2",  // Turquesa
+  "#3357FF",  // Azul Royal
+  "#FF5733",  // Laranja Forte
+  "#FF33A5",  // Rosa Forte
+  "#FFFB33",  // Amarelo Brilhante
+  "#333EFF",  // Azul Elétrico
+  "#A533FF",  // Violeta
+  "#FF6D33",  // Coral
+  "#33FF6D",  // Verde Neon
+  "#FF33B8"   // Magenta
+]
 
 export class AgendaController {
-  getAgenda(id_empresa: number) {
 
-    return agendaData.getAgendaTeste(id_empresa)
+  associarCoresAgendamentos(agendamentos: any) {
+    return agendamentos.map((agendamento: any, index: any) => {
+      const color = cores[index % cores.length]
+      return {
+        color: color,
+        ...agendamento
+      }
+    })
+  }
+
+  async getAgenda(id_empresa: number) {
+
+    let agendamento: any = await agendaData.getAgendaTeste(id_empresa)
+    return await this.associarCoresAgendamentos(agendamento)
   }
 
   async saveAgenda(agenda: any) {

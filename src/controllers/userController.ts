@@ -1,7 +1,8 @@
-import { User, LoginData } from '../utils/types'
+import 'dotenv/config'
+import { LoginData } from '../utils/types'
 import { UserData } from '../data/userData'
 import { EmpresaController } from './empresaController'
-import jwt, { Secret, JwtPayload } from 'jsonwebtoken'
+import jwt, { JwtPayload } from 'jsonwebtoken'
 import { Request, Response, NextFunction } from 'express'
 import { EmailController } from './emailController'
 import { AccessLevelScreenController } from './accessLevelScreenController'
@@ -13,7 +14,7 @@ const empresaController = new EmpresaController()
 const emailController = new EmailController()
 const accessLevelScreenController = new AccessLevelScreenController()
 
-export const SECRET_KEY: Secret = 'your-secret-key-here';
+export const SECRET_KEY: any = process.env.SECRET_KEY
 
 interface CustomRequest extends Request {
   token: string | JwtPayload;
@@ -42,9 +43,9 @@ export class UserController {
   };
 
   async login(loginData: LoginData) {
-    const foundUser = await userData.getUserByEmail(loginData.email);
+    const foundUser = await userData.getUserByEmail(loginData.email)
 
-    const isMatch = bcrypt.compareSync(loginData.senha, foundUser.senha);
+    const isMatch = bcrypt.compareSync(loginData.senha, foundUser.senha)
 
     const access_level =
       await accessLevelScreenController.getAccessLevelScreen(
@@ -53,13 +54,13 @@ export class UserController {
           id_access_levels: foundUser.access_levels
         })
 
-    const token = jwt.sign({ _id: foundUser.id_user?.toString(), nome: foundUser.nome }, SECRET_KEY, {
-      expiresIn: '2 days',
-    });
+    const token = jwt.sign({ id_user: foundUser.id_user, email: foundUser.email }, SECRET_KEY, {
+      expiresIn: '24h'
+    })
 
     return !foundUser || !isMatch
       ? { error: "Usuário ou senha incorretos!" }
-      : { user: { foundUser }, token: token, expiratedAt: '', access_level };
+      : { user: { foundUser }, token: token, expiratedAt: '', access_level }
   }
 
   async auth(req: Request, res: Response, next: NextFunction) {
@@ -113,7 +114,7 @@ export class UserController {
 
     !foundUser && res.status(404).send("Usuário não encontrado!")
 
-    const token = await crypto.randomBytes(5).toString('hex')
+    const token = crypto.randomBytes(5).toString('hex')
     try {
       const addedToken = await userData.addTokenResetPassword(req.body.email, token)
       if (addedToken) {
@@ -151,7 +152,7 @@ export class UserController {
 
   async saveUser(user: any) {
     const existingUser = await userData.getUserByEmail(user.email)
-    if (existingUser) throw new Error(JSON.stringify({ status: 400, error: 'Email already exists' }))
+    if (existingUser) throw new Error(JSON.stringify({ status: 400, error: 'Já existe um cadastro com este email!' }))
 
     user.senha = await this.encryptPassword(user.senha)
     const cadastroEmpresa = user.id_empresa

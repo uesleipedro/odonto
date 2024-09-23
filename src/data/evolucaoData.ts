@@ -13,7 +13,7 @@ export class EvolucaoData {
         u.nome
       FROM odonto.evolucoes e
       INNER JOIN odonto.user u ON e.id_profissional = u.id_user
-      WHERE e.id_empresa = $1 AND e.id_paciente = $2 ORDER BY e.updated_at`, [dados.id_empresa, dados.id_paciente])
+      WHERE e.id_empresa = $1 AND e.id_paciente = $2 ORDER BY e.updated_at DESC`, [dados.id_empresa, dados.id_paciente])
     return response
   }
 

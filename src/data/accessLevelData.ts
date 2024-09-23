@@ -8,6 +8,7 @@ export class AccessLevelData {
         al.access_level_id,
         al.level_name,
         al.description,
+        al.acessa_todas_agendas,
         COALESCE(json_agg(
           json_build_object(
             'value', als.id_screen,
@@ -25,8 +26,8 @@ export class AccessLevelData {
   }
 
   saveAccessLevel(access_level: any) {
-    return db.one('INSERT INTO odonto.access_levels (level_name, description, id_empresa) VALUES ($1, $2, $3) returning *',
-      [access_level.level_name, access_level.description, access_level.id_empresa])
+    return db.one('INSERT INTO odonto.access_levels (level_name, description, id_empresa, acessa_todas_agendas) VALUES ($1, $2, $3, $4) returning *',
+      [access_level.level_name, access_level.description, access_level.id_empresa, access_level.acessa_todas_agendas])
   }
 
   async deleteAccessLevel(access_level: any) {
@@ -60,8 +61,8 @@ export class AccessLevelData {
   async updateAccessLevel(access_level: any) {
     await this.deleteAccessLevelScreen(access_level)
 
-    return await db.none(`UPDATE odonto.access_levels SET level_name = $1, description = $2 WHERE access_level_id = $3 AND id_empresa = $4`,
-      [access_level.level_name, access_level.description, access_level.access_level_id, access_level.id_empresa])
+    return await db.none(`UPDATE odonto.access_levels SET level_name = $1, description = $2, acessa_todas_agendas = $5 WHERE access_level_id = $3 AND id_empresa = $4`,
+      [access_level.level_name, access_level.description, access_level.access_level_id, access_level.id_empresa, access_level.acessa_todas_agendas])
   }
 
   async deleteAccessLevelScreen(access_level: any) {
