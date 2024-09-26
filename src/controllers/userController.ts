@@ -7,6 +7,7 @@ import { Request, Response, NextFunction } from 'express'
 import { EmailController } from './emailController'
 import { AccessLevelScreenController } from './accessLevelScreenController'
 import crypto from 'crypto'
+import AppError from '../utils/appError'
 
 const bcrypt = require('bcryptjs')
 const userData = new UserData()
@@ -150,23 +151,36 @@ export class UserController {
     return await bcrypt.hash(password, saltRound)
   }
 
-  async saveUser(user: any) {
+  async saveUser(user: any, next: NextFunction) {
     const existingUser = await userData.getUserByEmail(user.email)
-    if (existingUser) throw new Error(JSON.stringify({ status: 400, error: 'Já existe um cadastro com este email!' }))
+    if (existingUser) {
+      next(new AppError('Já existe um cadastro com este email!', 409))
+    }
 
+    console.log("passou pelo existing user")
     user.senha = await this.encryptPassword(user.senha)
-    const cadastroEmpresa = user.id_empresa
+
+    console.log("senha", user.senha)
+    console.log("user.id_empresa", user.id_empresa)
+
+    /*const cadastroEmpresa = user.id_empresa
       ? { id_empresa: user.id_empresa }
-      : await empresaController.saveEmpresa(user)
+      : await empresaController.saveEmpresa(user, next)*/
+    const cadastroEmpresa = await empresaController.saveEmpresa(user, next)
 
-    if (cadastroEmpresa)
-      user.id_empresa = cadastroEmpresa.id_empresa
-    else
-      throw Error('Erro ao cadastrar empresa')
+    console.log("cadastroEmpresa", cadastroEmpresa)
+    if (!cadastroEmpresa)
+      next(cadastroEmpresa)
 
+    user.id_empresa = cadastroEmpresa.id_empresa
 
-    return userData.saveUser(user)
-  };
+    try {
+      return userData.saveUser(user)
+
+    } catch (e: any) {
+      return e
+    }
+  }
 
 
 } 

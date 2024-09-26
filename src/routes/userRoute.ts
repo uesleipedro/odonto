@@ -1,4 +1,4 @@
-import { Request, Response, Router } from 'express';
+import { NextFunction, Request, Response, Router } from 'express';
 import { UserController } from '../controllers/userController';
 
 const userController = new UserController();
@@ -49,14 +49,14 @@ router.post('/checkToken', async function(req: Request, res: Response, next) {
   }
 })
 
-router.post('/', async function(req: Request, res: Response, next) {
+router.post('/', async function(req: Request, res: Response, next: NextFunction) {
   try {
-    const response = await userController.saveUser(req.body)
+    const response = await userController.saveUser(req.body, next)
     res.status(201).json(response)
   } catch (e: any) {
-    res.status(400).json(JSON.parse(e.message))
+    next(e)
   }
-});
+})
 
 router.post('/login', async function(req: Request, res: Response, next) {
   /*try {

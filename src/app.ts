@@ -33,7 +33,6 @@ const options: cors.CorsOptions = {
 
 app.use(cors(options))
 app.use(express.json())
-
 app.use("/user", userRoute)
 app.use("/empresa", middleware.verificarToken, empresaRoute)
 app.use("/agenda", middleware.verificarToken, agendaRoute)
@@ -56,3 +55,10 @@ app.use("/evolucao", middleware.verificarToken, evolucaoRoute)
 app.use("/efi", middleware.verificarToken, efiRoute)
 app.use("/efiCredential", middleware.verificarToken, efiCredentialRoute)
 app.use("/formaPagamento", middleware.verificarToken, formaPagamentoRoute)
+
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+  const statusCode = err.status || 500
+  const message = err.message || 'Erro interno do servidor'
+  res.status(statusCode).json({ error: message })
+})
+
