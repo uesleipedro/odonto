@@ -5,6 +5,8 @@ const userController = new UserController();
 const router = Router();
 
 router.get('/', async function(req: Request, res: Response, next) {
+  res.status(999).json({ message: "um teste aqui" })
+  return
   try {
     const response = await userController.getUsers();
     res.status(200).json(response);
