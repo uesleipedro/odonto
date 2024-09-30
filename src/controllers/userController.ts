@@ -8,6 +8,7 @@ import { EmailController } from './emailController'
 import { AccessLevelScreenController } from './accessLevelScreenController'
 import crypto from 'crypto'
 import AppError from '../utils/appError'
+import { realpathSync } from 'fs'
 
 const bcrypt = require('bcryptjs')
 const userData = new UserData()
@@ -44,10 +45,10 @@ export class UserController {
   };
 
   async login(loginData: LoginData) {
+    return "teste"
     const foundUser = await userData.getUserByEmail(loginData.email)
 
     const isMatch = bcrypt.compareSync(loginData.senha, foundUser.senha)
-    return foundUser
 
     const access_level =
       await accessLevelScreenController.getAccessLevelScreen(
