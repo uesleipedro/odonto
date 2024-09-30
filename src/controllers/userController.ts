@@ -47,6 +47,7 @@ export class UserController {
     const foundUser = await userData.getUserByEmail(loginData.email)
 
     const isMatch = bcrypt.compareSync(loginData.senha, foundUser.senha)
+    return foundUser
 
     const access_level =
       await accessLevelScreenController.getAccessLevelScreen(
