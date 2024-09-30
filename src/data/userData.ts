@@ -1,8 +1,10 @@
 import db from '../infra/database'
+import "dotenv/config"
 
 export class UserData {
   getUsers() {
-    const response = db.query('SELECT * FROM odonto.user')
+    const response = process.env.DATABASE_NAME
+    //const response = db.query('SELECT * FROM odonto.user')
     return response
   }
 
