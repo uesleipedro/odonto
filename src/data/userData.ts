@@ -1,18 +1,9 @@
 import db from '../infra/database'
-import "dotenv/config"
 
 export class UserData {
   getUsers() {
-    const response = {
-      user: process.env.POSTGRES_USER,
-      password: process.env.POSTGRES_PASSWORD,
-      host: process.env.HOST,
-      port: 5432,
-      database: process.env.DATABASE_NAME,
-      key: "- " + process.env.SECRET_KEY,
-      mail_from: process.env.MAIL_FROM
-    }
-    //const response = db.query('SELECT * FROM odonto.user')
+
+    const response = db.query('SELECT * FROM odonto.user')
     return response
   }
 

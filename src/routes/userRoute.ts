@@ -59,12 +59,9 @@ router.post('/', async function(req: Request, res: Response, next: NextFunction)
 })
 
 router.post('/login', async function(req: Request, res: Response, next) {
-  /*try {
-  } catch (e: any) {
-      next(e);
-  }*/
-
-  const response = await userController.login(req.body);
+  res.status(999).json(req.body)
+  return
+  const response = await userController.login(req.body)
   response.error
     ? res.status(404).json(response)
     : res.status(201).json(response)
