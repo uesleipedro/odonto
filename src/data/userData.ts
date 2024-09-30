@@ -9,7 +9,7 @@ export class UserData {
       host: process.env.HOST,
       port: 5432,
       database: process.env.DATABASE_NAME,
-      key: process.env.SECRET_KEY
+      key: "- " + process.env.SECRET_KEY
     }
     //const response = db.query('SELECT * FROM odonto.user')
     return response
