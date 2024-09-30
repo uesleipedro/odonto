@@ -45,7 +45,6 @@ export class UserController {
   };
 
   async login(loginData: LoginData) {
-    return { teste: "teste" }
     const foundUser = await userData.getUserByEmail(loginData.email)
 
     const isMatch = bcrypt.compareSync(loginData.senha, foundUser.senha)
