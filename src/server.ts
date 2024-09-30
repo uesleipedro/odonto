@@ -9,4 +9,4 @@ const server =
 process.on('SIGINT', () => {
   server.close()
   console.log('Connection closed')
-});
+})
