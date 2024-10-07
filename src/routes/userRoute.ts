@@ -72,7 +72,7 @@ router.post('/login', async function(req: Request, res: Response, next) {
   response.error
     ? res.status(404).json(response)
     : res.status(201).json(response)
-});
+})
 
 router.post('/loginOne', async function(req: Request, res: Response, next) {
   try {

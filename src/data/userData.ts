@@ -50,6 +50,9 @@ export class UserData {
         e.bairro,
         e.cidade,
         e.uf,
+        e.numero,
+        e.celular,
+        e.email,
         u.access_levels,
         al.acessa_todas_agendas,
         al.acessa_financeiro_paciente
@@ -58,7 +61,7 @@ export class UserData {
         ON u.id_empresa = e.id_empresa
       INNER JOIN odonto.access_levels al 
         ON al.access_level_id = u.access_levels
-      WHERE email= $1
+      WHERE u.email= $1
       `, [email]
     )
   }
