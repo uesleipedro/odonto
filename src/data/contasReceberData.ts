@@ -18,14 +18,23 @@ export class ContasReceberData {
   }
 
 
+  async updateDadosCarnet(pagamento: any, boleto: any) {
+
+    return boleto.charges.map(async (row: any) => {
+
+      await db.none('UPDATE odonto.contas_receber SET expire_boleto_at = $4, link_boleto = $5, charge_id = $6, link_carnet = $7, carnet_id = $8 WHERE id_pagamento = $1 AND nr_parcela = $2 AND id_empresa = $3',
+        [pagamento.id_pagamento, Number(row.parcel), pagamento.id_empresa, row.expire_at, row.pdf.charge, row.charge_id, boleto.pdf.carnet, Number(boleto.carnet_id)])
+    })
+  }
+
   async estornoPagamento(dados: any) {
     return db.none(`UPDATE odonto.contas_receber SET status = 'Cancelado' WHERE id_pagamento = $1 AND nr_parcela = $2`,
       [dados.id_pagamento, dados.nr_parcela])
   }
 
   saveContaReceber(conta: any) {
-    return db.one('INSERT INTO odonto.contas_receber (id_pagamento, nr_parcela, valor, dt_vencimento, status, id_paciente, id_empresa, forma_pagamento) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) returning *',
-      [conta.id_pagamento, conta.nr_parcela, conta.valor, conta.dt_vencimento, conta.status, conta.id_paciente, conta.id_empresa, conta.forma_pagamento])
+    return db.one('INSERT INTO odonto.contas_receber (id_pagamento, nr_parcela, valor, dt_vencimento, status, id_paciente, id_empresa, forma_pagamento, qtd_parcelas) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) returning *',
+      [conta.id_pagamento, conta.nr_parcela, conta.valor, conta.dt_vencimento, conta.status, conta.id_paciente, conta.id_empresa, conta.forma_pagamento, conta.qtd_parcelas])
   }
 
   async deleteContasReceber(id_pagamento: number) {

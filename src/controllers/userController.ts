@@ -8,7 +8,6 @@ import { EmailController } from './emailController'
 import { AccessLevelScreenController } from './accessLevelScreenController'
 import crypto from 'crypto'
 import AppError from '../utils/appError'
-import { realpathSync } from 'fs'
 
 const bcrypt = require('bcryptjs')
 const userData = new UserData()
@@ -153,23 +152,35 @@ export class UserController {
   }
 
   async saveUser(user: any, next: NextFunction) {
-    const existingUser = await userData.getUserByEmail(user.email)
+    const existingUser = await userData.existUser(user.email)
+
     if (existingUser) {
       next(new AppError('Já existe um cadastro com este email!', 409))
+      return
     }
 
-    console.log("passou pelo existing user")
     user.senha = await this.encryptPassword(user.senha)
 
-    console.log("senha", user.senha)
-    console.log("user.id_empresa", user.id_empresa)
+    try {
+      return userData.saveUser(user)
 
-    /*const cadastroEmpresa = user.id_empresa
-      ? { id_empresa: user.id_empresa }
-      : await empresaController.saveEmpresa(user, next)*/
+    } catch (e: any) {
+      return e
+    }
+  }
+
+  async saveUserEmpresa(user: any, next: NextFunction) {
+    const existingUser = await userData.existUser(user.email)
+
+    if (existingUser) {
+      next(new AppError('Já existe um cadastro com este email!', 409))
+      return
+    }
+
+    user.senha = await this.encryptPassword(user.senha)
+
     const cadastroEmpresa = await empresaController.saveEmpresa(user, next)
 
-    console.log("cadastroEmpresa", cadastroEmpresa)
     if (!cadastroEmpresa)
       next(cadastroEmpresa)
 

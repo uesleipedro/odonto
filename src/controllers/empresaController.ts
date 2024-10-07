@@ -20,11 +20,14 @@ export class EmpresaController {
   async saveEmpresa(empresa: any, next: NextFunction) {
     const existingEmpresa = await empresaData.getEmpresaByCnpjCpf(String(empresa.cnpj_cpf))
 
-    console.log("existin emrpesa", existingEmpresa)
     if (existingEmpresa)
       next(new AppError('Já existe uma empresa cadastrada com esse CNPJ/CPF', 409))
 
     return empresaData.saveEmpresa(empresa)
+  }
+
+  async updateEmpresa(empresa: any) {
+    return empresaData.updateEmpresa(empresa)
   }
 }
 

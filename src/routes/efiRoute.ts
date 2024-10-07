@@ -13,6 +13,15 @@ router.post('/createBoleto', async function(req: Request, res: Response, next) {
   }
 })
 
+router.post('/createCarnet', async function(req: Request, res: Response, next) {
+  try {
+    const response = await efiController.createCarnet(req.body)
+    res.status(200).json(response)
+  } catch (e) {
+    next(e)
+  }
+})
+
 router.get('/listaBoletos', async function(req: Request, res: Response, next) {
   try {
     const response = await efiController.listaBoletos(Number(req.query.id_empresa))

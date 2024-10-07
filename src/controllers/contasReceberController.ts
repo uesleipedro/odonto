@@ -1,15 +1,9 @@
-import { Empresa } from '../utils/types';
-import { DenteData } from '../data/denteData';
 import { Request, Response, NextFunction } from 'express';
 import { ContasReceberData } from '../data/contasReceberData'
 
 const contasReceberData = new ContasReceberData()
 
 export class ContasReceberController {
-  //   getDentes() {
-
-  //     return denteData.getDentes();
-  //   };
 
   getContasReceberByPaciente(id_paciente: number, id_empresa: number) {
 
@@ -17,8 +11,6 @@ export class ContasReceberController {
   }
 
   async saveContaReceber(conta: any) {
-    // const existingPaciente = await pacienteData.getPacienteByCpf(String(paciente.cpf));
-    // if (existingPaciente) throw new Error('Já existe uma um paciente cadastrado com esse CPF');
 
     return contasReceberData.saveContaReceber(conta);
   }

@@ -34,6 +34,25 @@ export class EfiController {
       })
 
   }
+
+  async createCarnet(dados: any) {
+    const efipay = await this.genEfiPay(13)
+
+    return await efipay.createCarnet({}, dados.dadosCarnet)
+      .then(async (resposta) => {
+        if (resposta.code !== 200)
+          return
+
+        await contasReceberData.updateDadosCarnet(dados.dadosPagamento, resposta.data)
+
+        return resposta
+      })
+      .catch((error: any) => {
+        console.error(error)
+      })
+
+  }
+
   async listaBoletos(id_empresa: number) {
     const efipay = await this.genEfiPay(id_empresa)
 

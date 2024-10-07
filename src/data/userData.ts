@@ -11,11 +11,30 @@ export class UserData {
     return db.query('SELECT id_user as value, nome as label FROM odonto.user WHERE id_empresa = $1', [id_empresa])
   }
   async getUserByEmpresa2(id_empresa: number) {
-    return db.query('SELECT * FROM odonto.user WHERE id_empresa = $1', [id_empresa])
+    return db.query(`
+      SELECT 
+        u.email,
+        u.nome,
+        u.id_empresa,
+        u.id_user,
+        u.senha,
+        u.access_levels,
+        u.token_to_reset_password,
+        al.level_name
+      FROM 
+        odonto.user u 
+      INNER JOIN odonto.access_levels al 
+        ON al.access_level_id = u.access_levels
+      WHERE u.id_empresa = $1`,
+      [id_empresa])
   }
 
-  getUserByEmail(email: string) {
-    return db.oneOrNone(`
+  async existUser(email: string) {
+    return await db.oneOrNone(`SELECT * from odonto.user WHERE email = $1`, [email])
+  }
+
+  async getUserByEmail(email: string) {
+    return await db.oneOrNone(`
       SELECT 
         u.id_user,
 	      u.email,
@@ -32,7 +51,8 @@ export class UserData {
         e.cidade,
         e.uf,
         u.access_levels,
-        al.acessa_todas_agendas
+        al.acessa_todas_agendas,
+        al.acessa_financeiro_paciente
       FROM odonto.user u
       INNER JOIN odonto.empresa e
         ON u.id_empresa = e.id_empresa

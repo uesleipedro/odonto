@@ -58,6 +58,15 @@ router.post('/', async function(req: Request, res: Response, next: NextFunction)
   }
 })
 
+router.post('/userEmpresa', async function(req: Request, res: Response, next: NextFunction) {
+  try {
+    const response = await userController.saveUserEmpresa(req.body, next)
+    res.status(201).json(response)
+  } catch (e: any) {
+    next(e)
+  }
+})
+
 router.post('/login', async function(req: Request, res: Response, next) {
   const response = await userController.login(req.body)
   response.error

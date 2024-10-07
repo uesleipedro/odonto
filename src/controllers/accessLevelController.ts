@@ -12,7 +12,6 @@ export class AccessLevelController {
   }
 
   async deleteAccessLevel(access_level: any) {
-    console.log("delete ...", access_level)
 
     return await accessLevelData.deleteAccessLevel(access_level)
   }

@@ -22,6 +22,15 @@ router.get('/:id_empresa', async function(req: Request, res: Response, next) {
   }
 })
 
+router.put('/', async function(req: Request, res: Response, next) {
+  try {
+    const response = await empresaController.updateEmpresa(req.body)
+    res.status(201).json(response)
+  } catch (e: any) {
+    next(e)
+  }
+})
+
 router.post('/', async function(req: Request, res: Response, next) {
   try {
     const response = await empresaController.saveEmpresa(req.body, next)
