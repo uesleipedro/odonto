@@ -1,4 +1,4 @@
-import { NextFunction } from 'express'
+import { NextFunction, response } from 'express'
 import { EmpresaData } from '../data/empresaData'
 import AppError from '../utils/appError'
 
@@ -23,11 +23,13 @@ export class EmpresaController {
     if (existingEmpresa)
       next(new AppError('Já existe uma empresa cadastrada com esse CNPJ/CPF', 409))
 
-    return empresaData.saveEmpresa(empresa)
+    return await empresaData.saveEmpresa(empresa)
+
   }
 
   async updateEmpresa(empresa: any) {
-    return empresaData.updateEmpresa(empresa)
+    return await empresaData.updateEmpresa(empresa)
   }
+
 }
 

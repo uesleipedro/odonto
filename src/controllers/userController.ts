@@ -59,7 +59,7 @@ export class UserController {
       expiresIn: '24h'
     })
 
-    return !foundUser || !isMatch
+    return !foundUser || !isMatch || !foundUser?.status
       ? { error: "Usuário ou senha incorretos!" }
       : { user: { foundUser }, token: token, expiratedAt: '', access_level }
   }
@@ -94,6 +94,14 @@ export class UserController {
     try {
       user.senha = await this.encryptPassword(user.senha)
       return userData.updateUser(user)
+    } catch (error) {
+      return error
+    }
+  }
+
+  async updateUserStatus(user: any) {
+    try {
+      return userData.updateUserStatus(user)
     } catch (error) {
       return error
     }
@@ -141,9 +149,15 @@ export class UserController {
       : res.status(401).send({ messagem: "Tokens do not match" })
   }
 
-  async deleteUser(id_user: number, id_empresa: number) {
+  async deleteUser(data: any) {
 
-    return await userData.deleteUser(id_user, id_empresa);
+    try {
+      const res = await userData.deleteUser(data)
+
+      return res
+    } catch (error: any) {
+      console.error("ERRO DELETE USER", error.code)
+    }
   }
 
   async encryptPassword(password: string) {

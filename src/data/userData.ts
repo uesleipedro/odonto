@@ -20,7 +20,8 @@ export class UserData {
         u.senha,
         u.access_levels,
         u.token_to_reset_password,
-        al.level_name
+        al.level_name,
+        u.status
       FROM 
         odonto.user u 
       INNER JOIN odonto.access_levels al 
@@ -42,6 +43,7 @@ export class UserData {
 	      u.senha,
 	      u.id_empresa,
         u.token_to_reset_password,
+        u.status,
 	      e.razao_social,
 	      e.nome_fantasia,
 	      e.cnpj_cpf,
@@ -71,6 +73,12 @@ export class UserData {
       [user.email, user.nome, user.senha, Number(user.access_levels), user.schedule_color, Number(user.id_empresa), Number(user.id_user)])
   }
 
+  async updateUserStatus(user: any) {
+    let a = await db.none(`UPDATE odonto.user SET status = $1 WHERE id_user =$2 AND id_empresa = $3`,
+      [user.status, Number(user.id_user), Number(user.id_empresa)])
+  }
+
+
   async addTokenResetPassword(email: string, token: string) {
     return await db.oneOrNone(`UPDATE odonto.user SET token_to_reset_password = $2 WHERE email = $1 RETURNING *`,
       [email, token])
@@ -81,8 +89,18 @@ export class UserData {
       [email, senha])
   }
 
-  async deleteUser(id_user: number, id_empresa: number) {
-    return db.none('DELETE FROM odonto.user WHERE id_user = $1 AND id_empresa = $2', [id_user, id_empresa]);
+  async deleteUser(data: any) {
+    try {
+      await db.none('DELETE FROM odonto.user WHERE id_user = $1 AND id_empresa = $2',
+        [Number(data.id_user), Number(data.id_empresa)])
+      return { success: true, message: "Usuário excluído com sucesso" }
+    } catch (e: any) {
+      if (e.code === '23503') {
+        return { success: false, message: 'Não é possível excluir o usuário. Existe referência em outra tabela.' }
+      }
+      return { success: false, message: 'Erro ao excluir o usuário.', error: e.message }
+
+    }
   }
 
   saveUser(user: any) {

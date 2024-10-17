@@ -21,9 +21,21 @@ import evolucaoRoute from "./routes/evolucaoRoute"
 import efiRoute from "./routes/efiRoute"
 import efiCredentialRoute from "./routes/efiCredentialRoute"
 import formaPagamentoRoute from "./routes/formaPagamentoRoute"
+import uploadRouter from "./routes/uploadRouter"
 import { Middleware } from "./middlewares/middleware"
-import cors from 'cors'
+import cors from "cors"
+import multer from "multer"
 
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, '/home/ueslei/Pictures/odonto/uploads')
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + '-' + file.originalname)
+  }
+})
+
+const upload = multer({ storage })
 const middleware = new Middleware()
 export const app = express()
 
@@ -55,6 +67,7 @@ app.use("/evolucao", middleware.verificarToken, evolucaoRoute)
 app.use("/efi", middleware.verificarToken, efiRoute)
 app.use("/efiCredential", middleware.verificarToken, efiCredentialRoute)
 app.use("/formaPagamento", middleware.verificarToken, formaPagamentoRoute)
+app.use('/uploads', express.static('/var/www/uploads')); // Servir arquivos publicamente
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   const statusCode = err.status || 500

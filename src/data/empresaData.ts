@@ -25,7 +25,6 @@ export class EmpresaData {
   }
 
   async updateEmpresa(empresa: any) {
-    console.log("updateEmpresa", empresa)
     return db.none(`UPDATE odonto.empresa SET 
         razao_social = $2, 
         nome_fantasia = $3, 

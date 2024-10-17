@@ -101,6 +101,15 @@ router.put('/', async function(req: Request, res: Response) {
   }
 })
 
+router.put('/status', async function(req: Request, res: Response) {
+  try {
+    const response = await userController.updateUserStatus(req.body)
+    res.status(201).json(response)
+  } catch (e: any) {
+    res.status(400).json({ message: e.message })
+  }
+})
+
 router.put('/redefinirSenha', async function(req: Request, res: Response, next) {
   try {
     const response = await userController.updatePassword(req, res);
@@ -110,9 +119,14 @@ router.put('/redefinirSenha', async function(req: Request, res: Response, next) 
   }
 })
 
-router.delete('/:id_user/:id_empresa', async (req: Request, res: Response) => {
-  const response = await userController.deleteUser(Number(req.params.id_user), Number(req.params.id_empresa))
-  res.status(204).json(response)
+router.delete('/', async (req: Request, res: Response) => {
+  const response = await userController.deleteUser(req.body)
+
+  if (response?.success) {
+    return res.status(204).json({ message: response?.message })
+  }
+
+  return res.status(400).json({ message: response?.message })
 })
 
 
