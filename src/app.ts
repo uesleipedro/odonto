@@ -24,20 +24,8 @@ import formaPagamentoRoute from "./routes/formaPagamentoRoute"
 import uploadRouter from "./routes/uploadRouter"
 import { Middleware } from "./middlewares/middleware"
 import cors from "cors"
-import multer from "multer"
-const fileUpload = require('express-fileupload');
 
-/*const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, '/home/ueslei/Pictures/odonto/uploads')
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + '-' + file.originalname)
-  }
-})
-
-const upload = multer({ storage })*/
-
+const fileUpload = require('express-fileupload')
 const middleware = new Middleware()
 export const app = express()
 
@@ -45,11 +33,19 @@ const options: cors.CorsOptions = {
   origin: '*'
 }
 
-app.use(fileUpload());
-app.use(express.static('public'));
-
+app.use(fileUpload())
+app.use(express.static('public'))
+/*app.use(
+  fileUpload({
+    limits: {
+      fileSize: 10000000, // Around 10MB
+    },
+    abortOnLimit: true,
+  })
+)*/
 app.use(cors(options))
 app.use(express.json())
+
 app.use("/user", userRoute)
 app.use("/empresa", middleware.verificarToken, empresaRoute)
 app.use("/agenda", middleware.verificarToken, agendaRoute)
