@@ -25,8 +25,9 @@ import uploadRouter from "./routes/uploadRouter"
 import { Middleware } from "./middlewares/middleware"
 import cors from "cors"
 import multer from "multer"
+const fileUpload = require('express-fileupload');
 
-const storage = multer.diskStorage({
+/*const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, '/home/ueslei/Pictures/odonto/uploads')
   },
@@ -35,13 +36,17 @@ const storage = multer.diskStorage({
   }
 })
 
-const upload = multer({ storage })
+const upload = multer({ storage })*/
+
 const middleware = new Middleware()
 export const app = express()
 
 const options: cors.CorsOptions = {
   origin: '*'
 }
+
+app.use(fileUpload());
+app.use(express.static('public'));
 
 app.use(cors(options))
 app.use(express.json())
@@ -67,7 +72,7 @@ app.use("/evolucao", middleware.verificarToken, evolucaoRoute)
 app.use("/efi", middleware.verificarToken, efiRoute)
 app.use("/efiCredential", middleware.verificarToken, efiCredentialRoute)
 app.use("/formaPagamento", middleware.verificarToken, formaPagamentoRoute)
-app.use('/uploads', express.static('/var/www/uploads')); // Servir arquivos publicamente
+app.use('/uploads', uploadRouter) // Servir arquivos publicamente
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   const statusCode = err.status || 500
