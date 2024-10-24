@@ -31,6 +31,15 @@ router.get('/listaBoletos', async function(req: Request, res: Response, next) {
   }
 })
 
+router.get('/listaCarnes', async function(req: Request, res: Response, next) {
+  try {
+    const response = await efiController.listaCarnes(Number(req.query.id_empresa))
+    res.status(200).json(response)
+  } catch (e) {
+    next(e)
+  }
+})
+
 router.put('/cancelaBoleto', async function(req: Request, res: Response, next) {
   try {
     const response = await efiController.cancelaBoleto(req.body)

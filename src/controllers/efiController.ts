@@ -75,6 +75,28 @@ export class EfiController {
     }
   }
 
+  async listaCarnes(id_empresa: number) {
+    const efipay = await this.genEfiPay(id_empresa)
+
+    try {
+      const params: {
+        begin_date: string;
+        end_date: string;
+        charge_type: 'billet' | 'card' | 'carnet' | 'subscription';
+      } = {
+        // Adicione parâmetros para paginação e outros filtros se necessário
+        begin_date: '2024-01-01',
+        end_date: '2024-12-31',
+        charge_type: "carnet"
+      }
+
+      const response = await efipay.listCharges(params)
+      return response
+    } catch (error: any) {
+      console.error('Erro ao consultar boletos:', error.response ? error.response.data : error.message);
+    }
+  }
+
   async cancelaBoleto(dados: any) {
     const efipay = await this.genEfiPay(Number(dados.id_empresa))
     const response = await efipay.cancelCharge({ id: Number(dados.id) })
